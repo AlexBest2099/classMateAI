@@ -1,0 +1,166 @@
+{
+    "content": [
+      {
+        "subject_name": "Machine Learning",
+        "subject_description": "Algorithms that allow systems to learn from data.",
+        "topics": [
+          {
+            "topic_name": "Gradient Descent",
+            "topic_description": "Optimization algorithm for finding minima of functions.",
+            "source_locations": [
+              {
+                "filename": "ml_lecture_notes.pdf",
+                "filepath": "/university/cs501/notes/",
+                "page": 15,
+                "location_description": "Section 3: Optimization"
+              },
+              {
+                "filename": "deep_learning_book.pdf",
+                "filepath": "/books/ai/",
+                "page": 85,
+                "location_description": "Chapter 4.3"
+              }
+            ],
+            "subtopics": [
+              {
+                "subtopic_name": "Stochastic Gradient Descent",
+                "subtopic_description": "Updates parameters using one sample at a time.",
+                "source_locations": [
+                  {
+                    "filename": "ml_lecture_notes.pdf",
+                    "filepath": "/university/cs501/notes/",
+                    "page": 16,
+                    "location_detail": "Paragraph 2",
+                    "keywords": "SGD, online learning, variance"
+                  },
+                  {
+                    "filename": "sgd_paper.pdf",
+                    "filepath": "/papers/ml/",
+                    "page": 3,
+                    "location_detail": "Algorithm 1",
+                    "keywords": "update rule, convergence"
+                  }
+                ]
+              },
+              {
+                "subtopic_name": "Batch Gradient Descent",
+                "subtopic_description": "Updates parameters using the entire dataset.",
+                "source_locations": [
+                  {
+                    "filename": "ml_lecture_notes.pdf",
+                    "filepath": "/university/cs501/notes/",
+                    "page": 15,
+                    "location_detail": "Comparison Table"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "topic_name": "Linear Regression",
+            "topic_description": "Predicting a continuous value based on linear relationships.",
+            "source_locations": [
+              {
+                "filename": "stats_intro.pdf",
+                "filepath": "/university/stats101/",
+                "page": 112
+              }
+            ],
+            "subtopics": [
+              {
+                "subtopic_name": "Ordinary Least Squares",
+                "subtopic_description": "Method for estimating parameters by minimizing the sum of squared residuals.",
+                "source_locations": [
+                  {
+                    "filename": "stats_intro.pdf",
+                    "filepath": "/university/stats101/",
+                    "page": 115,
+                    "location_detail": "Equation 5.3",
+                    "keywords": "OLS, residuals, cost function"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "subject_name": "Calculus",
+        "subject_description": "The mathematical study of continuous change.",
+        "topics": [
+          {
+            "topic_name": "Differentiation",
+            "topic_description": "Finding the rate at which a quantity changes.",
+            "source_locations": [
+              {
+                "filename": "calc_textbook.pdf",
+                "filepath": "/books/math/",
+                "page": 75,
+                "location_description": "Chapter 3 Introduction"
+              }
+            ],
+            "subtopics": [
+              {
+                "subtopic_name": "Chain Rule",
+                "source_locations": [
+                  {
+                    "filename": "calc_textbook.pdf",
+                    "filepath": "/books/math/",
+                    "page": 92,
+                    "location_detail": "Theorem 3.5",
+                    "keywords": "composition, derivative, inner function, outer function"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "mistakes": [
+      {
+        "source_filename": "ml_homework_2.pdf",
+        "source_filepath": "/university/cs501/homework/",
+        "page": 2,
+        "location_detail": "Problem 1, Part (b), Line 5",
+        "description": "Learning rate set too high, caused divergence.",
+        "type": "Hyperparameter Tuning",
+        "details": "The cost function increased instead of decreasing. Needed to reduce alpha from 0.1 to 0.01.",
+        "relevant_topic": "Gradient Descent",
+        "relevant_subtopic": "Stochastic Gradient Descent"
+      },
+      {
+        "source_filename": "calc_exam_1.pdf",
+        "source_filepath": "/exams/math/",
+        "page": 1,
+        "location_detail": "Question 3",
+        "description": "Forgot to apply the chain rule to the inner function.",
+        "type": "Procedural Error",
+        "details": "Differentiated outer function correctly, but missed multiplying by derivative of e^(2x).",
+        "relevant_topic": "Differentiation",
+        "relevant_subtopic": "Chain Rule"
+      },
+      {
+        "source_filename": "ml_homework_1.pdf",
+        "source_filepath": "/university/cs501/homework/",
+        "page": 3,
+        "location_detail": "Problem 4",
+        "description": "Used incorrect formula for OLS.",
+        "type": "Conceptual Error",
+        "details": "Mixed up the terms in the normal equation.",
+        "relevant_topic": "Linear Regression",
+        "relevant_subtopic": "Ordinary Least Squares"
+      },
+      {
+        "source_filename": "calc_exam_1.pdf",
+        "source_filepath": "/exams/math/",
+        "page": 4,
+        "location_detail": "Question 7",
+        "description": "Arithmetic error during simplification.",
+        "type": "Calculation",
+        "details": "Made a mistake adding fractions at the end.",
+        "relevant_topic": "Differentiation"
+      }
+    ]
+  }
+  
