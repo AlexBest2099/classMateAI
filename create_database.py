@@ -356,6 +356,61 @@ def create_database_from_json(json_file_path: str, db_file_path: str) -> bool:
     finally:
         if conn: conn.close()
 
+
+
+
+
+
+def check_file_exists_in_db(db_filepath: str, filename_to_check: str) -> bool:
+    """
+    Checks if a record with the given filename exists in the Sources table
+    of the specified SQLite database.
+
+    Args:
+        db_filepath: Path to the SQLite database file (e.g., 'database.db').
+        filename_to_check: The filename to search for (e.g., 'hw1.pdf').
+
+    Returns:
+        True if at least one record with that filename exists, False otherwise.
+        Returns False also if a database error occurs.
+    """
+    conn = None
+    exists = False
+    try:
+        if not os.path.exists(db_filepath):
+            print(f"Error: Database file not found at '{db_filepath}'")
+            return False
+
+        conn = sqlite3.connect(db_filepath)
+        cursor = conn.cursor()
+
+        sql_query = "SELECT COUNT(*) FROM Sources WHERE filename = ?"
+
+        cursor.execute(sql_query, (filename_to_check,))
+
+        result = cursor.fetchone()
+
+        if result and result[0] > 0:
+            exists = True
+
+    except sqlite3.Error as e:
+        print(f"An SQLite error occurred: {e}")
+        exists = False
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+        exists = False
+    finally:
+        if conn:
+            conn.close()
+
+    return exists
+
+
+
+
+
+
+
 # --- Example Usage ---
 if __name__ == "__main__":
     JSON_FILE = 'test.json' # Use a new name for the JSON
