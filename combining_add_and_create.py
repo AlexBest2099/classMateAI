@@ -28,7 +28,7 @@ def process_and_add_file():
     Use the source filename and filepath provided externally (which will be added later) for the source_filename and source_filepath fields within each good answer object.
     Handle missing topic/subtopic links as described for mistakes. The sources should only contain the filename and the filepath the filepath,  only one entry. The descriptions you should add youself, based on the content. 
     Same with keywords for localizaiton try and find them, and specify. If there is page number on the document dont use it, use only the actual page counter. Make as many topics as possible, you can ignore subtopics and replace them with null
-    General Rules:Do not invent data. Use null for optional fields where information cannot be extracted. Make sure the topics extracted are correct,
+    General Rules:Do not invent data. Use null for optional fields where information cannot be extracted. Make sure the topics extracted are correct, Make sure none you dont create NoneType object
     Adhere strictly to the JSON structure expected by the data insertion logic in the associated Python script. Only output the raw JSON object, nothing else before or after it.
     """
     entries=os.listdir('data')

@@ -14,9 +14,10 @@ def create_study_guide_md(topic_name: str,
     """
     Generates a Markdown study guide for a topic using Gemini.
 
-    Finds relevant content files for the topic in the database, combines them
-    with the provided question text file, asks Gemini to generate a cited
-    Markdown study guide, and saves it to a file.
+    Finds relevant content files for the topic in the database (assuming the
+    'filepath' column stores the full path), combines them with the provided
+    question text file, asks Gemini to generate a cited Markdown study guide,
+    and saves it to a file.
 
     Args:
         topic_name (str): The name of the topic.
@@ -80,21 +81,34 @@ def create_study_guide_md(topic_name: str,
             WHERE tsl.topic_id = ? OR sub.topic_id = ? OR m.topic_id = ?
         """, (topic_id, topic_id, topic_id, topic_id, topic_id, topic_id, topic_id))
 
+        # <<< MODIFICATION START >>>
         for row in cursor.fetchall():
-            fpath = row[0] if row[0] else "."
-            fname = row[1]
-            if fname:
-                 full_path = os.path.normpath(os.path.join(fpath, fname))
-                 # Add if it's not the explicitly provided question file
-                 if full_path != question_file_normalized:
-                     relevant_files_from_db.add(full_path)
+            fpath = row[0] # Get the value from the 'filepath' column
+            # fname = row[1] # Optional: Get filename if needed for display name
+
+            full_path = None # Initialize full_path for this iteration
+            if fpath: # Check if filepath column value is not None or empty
+                # Assume fpath directly contains the full path including the filename
+                full_path = os.path.normpath(fpath)
+
+                # Add if it's not the explicitly provided question file
+                if full_path != question_file_normalized:
+                    relevant_files_from_db.add(full_path)
+                # else: # Implicitly skip if it IS the question file
+                #    print(f"  (Info: Skipping '{full_path}' as it matches the question file)") # Optional info log
+
+            else:
+                # Handle cases where filepath might be missing in the DB
+                print(f"  Warning: Found database entry with missing filepath for topic '{topic_name}'. Skipping row.")
+                continue # Skip to the next row in the loop
+        # <<< MODIFICATION END >>>
 
         print(f"Found {len(relevant_files_from_db)} relevant file(s) in DB for topic '{topic_name}' (excluding question file if listed).")
 
 
         # --- 5. Prepare Final List of Files to Upload ---
         files_to_upload_paths = set()
-        # Add DB files (check existence)
+        # Add DB files (check existence using the path directly from 'filepath' column)
         for f_path in relevant_files_from_db:
              if os.path.exists(f_path):
                  files_to_upload_paths.add(f_path)
@@ -107,7 +121,7 @@ def create_study_guide_md(topic_name: str,
 
         if not files_to_upload_paths:
              print(f"Error: No valid files to upload for topic '{topic_name}'. Cannot generate guide.")
-             conn.close()
+             if conn: conn.close() # Ensure connection is closed before returning
              return None
 
 
@@ -118,10 +132,12 @@ def create_study_guide_md(topic_name: str,
         for file_path in files_to_upload_paths:
             print(f"  Uploading '{file_path}'...")
             try:
+                # Use os.path.basename to get the display name from the full path
                 file_basename = os.path.basename(file_path)
                 file_obj = genai.upload_file(path=file_path, display_name=file_basename)
                 gemini_files.append(file_obj)
                 uploaded_files_info.append({'name': file_obj.name, 'path': file_path})
+                # Store the basename derived from the full path for the prompt
                 file_metadata_for_prompt.append({'filename': file_basename, 'uri': file_obj.uri})
                 print(f"    Uploaded successfully: {file_obj.uri} (Filename: {file_basename})")
             except Exception as upload_err:
@@ -129,12 +145,13 @@ def create_study_guide_md(topic_name: str,
 
         if not gemini_files:
              print("Error: Failed to upload any files to Gemini. Cannot generate guide.")
-             conn.close()
+             if conn: conn.close() # Ensure connection is closed before returning
              return None
 
 
         # --- 7. Construct Gemini Prompt ---
         question_file_basename = os.path.basename(question_txt_filepath)
+        # Use the filenames derived in step 6 for the prompt list
         file_list_str = "\n".join([f"- {meta['filename']}" for meta in file_metadata_for_prompt])
 
         prompt = f"""
@@ -151,7 +168,7 @@ def create_study_guide_md(topic_name: str,
         3. Analyze the questions in "{question_file_basename}" and discuss common mistakes, approaches, or important points related to answering them, using the context files for support.
         4. Provide clear examples or illustrations of the concepts, drawing from the context files.
         5. Offer tips or strategies for mastering the topic.
-        6. **Crucially, for any information, concept, example, mistake, or question analysis you mention, you MUST cite the source file(s) where it originates using the format [Filename] or [Filename, Page X] or [Filename, Location Y] if page number or location details are available in the context.** Base your citations ONLY on the provided filenames listed above.
+        6. **Crucially, for any information, concept, example, mistake, or question analysis you mention, you MUST cite the source file(s) where it originates using the format [Filename] or [Filename, Page X] or [Filename, Location Y] if page number or location details are available in the context.** Base your citations ONLY on the provided filenames listed above (use the base filenames like 'lecture1.pdf', not the full paths).
 
         Structure the guide logically using **Markdown formatting** (headings, lists, bold text, etc.). Ensure the entire output is valid Markdown.
         """
