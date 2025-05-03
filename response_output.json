@@ -2,196 +2,195 @@
     "content": [
         {
             "subject_name": "Automation",
-            "subject_description": "Course material covering fundamental concepts in automation, specifically focusing on sensor basics and concepts.",
+            "subject_description": "Concepts related to automation, specifically focusing on sensor basics and characteristics.",
             "topics": [
                 {
                     "topic_name": "Sensor Basics",
-                    "topic_description": "Introduction to what sensors are, their properties, outputs, and roles as transducers.",
+                    "topic_description": "Fundamental concepts defining sensors, their properties, and classifications.",
                     "source_locations": [
                         {
                             "filename": "Automation_P02_SensorConcepts.pdf",
                             "filepath": "data/Automation_P02_SensorConcepts.pdf",
-                            "page": 2,
-                            "location_description": "Topic Title Slide: What is a sensor?"
+                            "page": 3,
+                            "location_description": "Slide: Sensor definition and output",
+                            "keywords": "measures a physical property, produces an output signal, electronic output, voltage, current, frequency"
                         },
                         {
                             "filename": "Automation_P02_SensorConcepts.pdf",
                             "filepath": "data/Automation_P02_SensorConcepts.pdf",
-                            "page": 3,
-                            "location_description": "Definition and characteristics"
+                            "page": 4,
+                            "location_description": "Slide: Sensor as transducer",
+                            "keywords": "transducer, converts one form of energy into an other, electrical energy, mechanical energy, actuators, piezo-electric crystals"
+                        },
+                        {
+                            "filename": "Automation_P02_SensorConcepts.pdf",
+                            "filepath": "data/Automation_P02_SensorConcepts.pdf",
+                            "page": 5,
+                            "location_description": "Slide: Active vs passive sensor / sensing",
+                            "keywords": "active sensor, passive sensor, external power source, excitation signal, thermistor, emits a signal, radar, interferences"
                         }
                     ],
                     "subtopics": [
                         {
-                            "subtopic_name": "Sensor Definition and Characteristics",
-                            "subtopic_description": "Defining what a sensor is, properties it measures, and the nature of its output signal.",
+                            "subtopic_name": "Definition of a Sensor",
+                            "subtopic_description": "What constitutes a sensor in terms of measurement and output.",
                             "source_locations": [
                                 {
                                     "filename": "Automation_P02_SensorConcepts.pdf",
                                     "filepath": "data/Automation_P02_SensorConcepts.pdf",
-                                    "page": 2,
-                                    "location_detail": "Title slide question",
-                                    "keywords": "What is a sensor?"
-                                },
-                                {
-                                    "filename": "Automation_P02_SensorConcepts.pdf",
-                                    "filepath": "data/Automation_P02_SensorConcepts.pdf",
                                     "page": 3,
-                                    "location_detail": "Bullet points",
-                                    "keywords": "measures a physical property, produces an output signal"
+                                    "location_detail": "Slide: Sensor definition",
+                                    "keywords": "measures a physical property, output signal"
                                 }
                             ]
                         },
                         {
-                            "subtopic_name": "Sensor as Transducer",
-                            "subtopic_description": "Understanding sensors as devices that convert one form of energy into another.",
+                            "subtopic_name": "Transducers",
+                            "subtopic_description": "Understanding sensors as devices that convert energy from one form to another.",
                             "source_locations": [
                                 {
                                     "filename": "Automation_P02_SensorConcepts.pdf",
                                     "filepath": "data/Automation_P02_SensorConcepts.pdf",
                                     "page": 4,
-                                    "location_detail": "Definition and examples",
-                                    "keywords": "transducer, converts energy, piezo-electric crystals"
+                                    "location_detail": "Slide: Transducer definition and example",
+                                    "keywords": "transducer, energy conversion, piezo-electric crystals"
                                 }
                             ]
                         },
                         {
                             "subtopic_name": "Active vs Passive Sensors",
-                            "subtopic_description": "Distinguishing between sensors that require external power/emit a signal and those that do not.",
+                            "subtopic_description": "Classification of sensors based on their requirement for an external power source or signal emission.",
                             "source_locations": [
                                 {
                                     "filename": "Automation_P02_SensorConcepts.pdf",
                                     "filepath": "data/Automation_P02_SensorConcepts.pdf",
                                     "page": 5,
-                                    "location_detail": "Definitions and options",
-                                    "keywords": "active sensor, passive sensor, excitation signal, emits a signal"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "topic_name": "Sensor Transfer Function",
-                    "topic_description": "Analysis of the mapping from sensor input to output, including linearity and examples.",
-                    "source_locations": [
-                        {
-                            "filename": "Automation_P02_SensorConcepts.pdf",
-                            "filepath": "data/Automation_P02_SensorConcepts.pdf",
-                            "page": 6,
-                            "location_description": "Topic Title Slide"
-                        }
-                    ],
-                    "subtopics": [
-                        {
-                            "subtopic_name": "Definition and Linear Approximation",
-                            "subtopic_description": "Defining the transfer function and the common assumption of linearity.",
-                            "source_locations": [
-                                {
-                                    "filename": "Automation_P02_SensorConcepts.pdf",
-                                    "filepath": "data/Automation_P02_SensorConcepts.pdf",
-                                    "page": 7,
-                                    "location_detail": "Definition and linear graph",
-                                    "keywords": "transfer function, characteristic curve, mapping input to output, linear approximation"
+                                    "location_detail": "Slide: Active vs passive sensor",
+                                    "keywords": "active sensor, passive sensor, excitation signal, thermistor, radar, interference"
                                 }
                             ]
                         },
                         {
-                            "subtopic_name": "Non-linear Characteristics",
-                            "subtopic_description": "Discussing cases where the sensor transfer function is not linear.",
-                            "source_locations": [
-                                {
-                                    "filename": "Automation_P02_SensorConcepts.pdf",
-                                    "filepath": "data/Automation_P02_SensorConcepts.pdf",
-                                    "page": 8,
-                                    "location_detail": "IR distance sensor example",
-                                    "keywords": "not always linear, Sharp IR distance sensor"
-                                }
-                            ]
-                        },
-                        {
-                            "subtopic_name": "Ultrasonic Range Sensor Example",
-                            "subtopic_description": "Detailed example of an ultrasonic sensor based on time of flight, including environmental dependencies.",
+                            "subtopic_name": "Ultrasonic Range Sensor",
+                            "subtopic_description": "An example of a sensor illustrating concepts like dependence on environmental parameters.",
                             "source_locations": [
                                 {
                                     "filename": "Automation_P02_SensorConcepts.pdf",
                                     "filepath": "data/Automation_P02_SensorConcepts.pdf",
                                     "page": 9,
-                                    "location_detail": "Example introduction",
-                                    "keywords": "ultrasonic range sensor, measures distance, time of flight"
+                                    "location_detail": "Slide: Ultrasonic range sensor example",
+                                    "keywords": "ultrasonic range sensor, measures distance, time of flight, ToF"
                                 },
                                 {
                                     "filename": "Automation_P02_SensorConcepts.pdf",
                                     "filepath": "data/Automation_P02_SensorConcepts.pdf",
                                     "page": 10,
-                                    "location_detail": "Formula and speed of sound factors",
+                                    "location_detail": "Slide: Ultrasonic range sensor formula and speed of sound dependence",
                                     "keywords": "distance formula, speed of sound, medium, temperature, humidity"
                                 },
                                 {
                                     "filename": "Automation_P02_SensorConcepts.pdf",
                                     "filepath": "data/Automation_P02_SensorConcepts.pdf",
                                     "page": 11,
-                                    "location_detail": "Speed of sound graph",
-                                    "keywords": "speed of sound vs temperature and humidity"
+                                    "location_detail": "Slide: Speed of sound dependence chart",
+                                    "keywords": "speed of sound formula, temperature, humidity, constant pressure"
                                 },
                                 {
                                     "filename": "Automation_P02_SensorConcepts.pdf",
                                     "filepath": "data/Automation_P02_SensorConcepts.pdf",
                                     "page": 12,
-                                    "location_detail": "Handling environmental parameters",
-                                    "keywords": "measure environment parameters, additional sensors, errors"
+                                    "location_detail": "Slide: Accounting for environmental parameters in ultrasonic sensing",
+                                    "keywords": "environmental parameters, errors, additional sensors, d(delta t, T, RH)"
                                 }
                             ]
                         }
                     ]
                 },
                 {
-                    "topic_name": "Sensor Calibration",
-                    "topic_description": "Methods for fitting sensor models to actual values to improve accuracy.",
+                    "topic_name": "Transfer Function and Characteristic Curve",
+                    "topic_description": "Describes the relationship between sensor input and output.",
+                    "source_locations": [
+                        {
+                            "filename": "Automation_P02_SensorConcepts.pdf",
+                            "filepath": "data/Automation_P02_SensorConcepts.pdf",
+                            "page": 6,
+                            "location_description": "Slide: Title Transfer Function / Characteristic Curve",
+                            "keywords": null
+                        },
+                        {
+                            "filename": "Automation_P02_SensorConcepts.pdf",
+                            "filepath": "data/Automation_P02_SensorConcepts.pdf",
+                            "page": 7,
+                            "location_description": "Slide: Transfer function definition and linear example",
+                            "keywords": "transfer function, characteristic curve, CC, mapping input to output, linear, sensor range, Signal Transfer Function, y = mx + b approximation"
+                        },
+                        {
+                            "filename": "Automation_P02_SensorConcepts.pdf",
+                            "filepath": "data/Automation_P02_SensorConcepts.pdf",
+                            "page": 8,
+                            "location_description": "Slide: Non-linear transfer function example",
+                            "keywords": "non-linear, Sharp IR distance sensor GP2Y0A41SKOF"
+                        },
+                        {
+                            "filename": "Automation_P02_SensorConcepts.pdf",
+                            "filepath": "data/Automation_P02_SensorConcepts.pdf",
+                            "page": 9,
+                            "location_description": "Slide: CC dependence on environment parameters",
+                            "keywords": "multiple environment parameters, physical property of interest"
+                        }
+                    ],
+                    "subtopics": []
+                },
+                {
+                    "topic_name": "Calibration",
+                    "topic_description": "Process of fitting a model to match sensor values to actual physical properties.",
                     "source_locations": [
                         {
                             "filename": "Automation_P02_SensorConcepts.pdf",
                             "filepath": "data/Automation_P02_SensorConcepts.pdf",
                             "page": 13,
-                            "location_description": "Topic Title Slide"
+                            "location_description": "Slide: Title Calibration",
+                            "keywords": null
+                        },
+                        {
+                            "filename": "Automation_P02_SensorConcepts.pdf",
+                            "filepath": "data/Automation_P02_SensorConcepts.pdf",
+                            "page": 14,
+                            "location_description": "Slide: Calibration using Linear Least Squares",
+                            "keywords": "calibration, fit model parameters, actual sensor values, linear model, y=ax+b, Linear Least Squares, LLS, measurements, data, curve fit"
+                        },
+                        {
+                            "filename": "Automation_P02_SensorConcepts.pdf",
+                            "filepath": "data/Automation_P02_SensorConcepts.pdf",
+                            "page": 15,
+                            "location_description": "Slide: Complex calibration examples",
+                            "keywords": "complex models, camera calibration, pinhole model, focal length, image center, principal point, imager parameters, distortion coefficients"
                         }
                     ],
                     "subtopics": [
                         {
-                            "subtopic_name": "Calibration Process",
-                            "subtopic_description": "Fitting model parameters to actual sensor values.",
+                            "subtopic_name": "Linear Least Squares (LLS)",
+                            "subtopic_description": "A method for finding the best-fitting linear model parameters.",
                             "source_locations": [
                                 {
                                     "filename": "Automation_P02_SensorConcepts.pdf",
                                     "filepath": "data/Automation_P02_SensorConcepts.pdf",
                                     "page": 14,
-                                    "location_detail": "Definition and linear model",
-                                    "keywords": "fit model parameters, actual sensor values, linear model"
+                                    "location_detail": "Slide: Linear Least Squares",
+                                    "keywords": "Linear Least Squares, LLS, fitting, formula"
                                 }
                             ]
                         },
                         {
-                            "subtopic_name": "Linear Least Squares",
-                            "subtopic_description": "A method for finding the best linear fit for calibration data.",
-                            "source_locations": [
-                                {
-                                    "filename": "Automation_P02_SensorConcepts.pdf",
-                                    "filepath": "data/Automation_P02_SensorConcepts.pdf",
-                                    "page": 14,
-                                    "location_detail": "LLS definition and formula",
-                                    "keywords": "Linear Least Squares, LLS, given n measurements"
-                                }
-                            ]
-                        },
-                        {
-                            "subtopic_name": "Complex Calibration Examples",
-                            "subtopic_description": "Examples of more complex calibration procedures like camera calibration.",
+                            "subtopic_name": "Camera Calibration",
+                            "subtopic_description": "An example of calibration for complex sensors, including lens distortion.",
                             "source_locations": [
                                 {
                                     "filename": "Automation_P02_SensorConcepts.pdf",
                                     "filepath": "data/Automation_P02_SensorConcepts.pdf",
                                     "page": 15,
-                                    "location_detail": "Camera calibration example",
-                                    "keywords": "sensors can be complex, camera calibration, pinhole model, distortion coefficients"
+                                    "location_detail": "Slide: Camera calibration",
+                                    "keywords": "camera calibration, pinhole model, distortion coefficients"
                                 }
                             ]
                         }
@@ -199,229 +198,266 @@
                 },
                 {
                     "topic_name": "Sensor Errors",
-                    "topic_description": "Understanding different types of inaccuracies in sensor measurements.",
+                    "topic_description": "Types of inaccuracies and deviations in sensor measurements.",
                     "source_locations": [
                         {
                             "filename": "Automation_P02_SensorConcepts.pdf",
                             "filepath": "data/Automation_P02_SensorConcepts.pdf",
                             "page": 16,
-                            "location_description": "Topic Title Slide"
+                            "location_description": "Slide: Title Sensor Errors",
+                            "keywords": null
+                        },
+                        {
+                            "filename": "Automation_P02_SensorConcepts.pdf",
+                            "filepath": "data/Automation_P02_SensorConcepts.pdf",
+                            "page": 17,
+                            "location_description": "Slide: Typical errors for linear model",
+                            "keywords": "typical errors, linear model, offset, gain, non-linearity"
+                        },
+                        {
+                            "filename": "Automation_P02_SensorConcepts.pdf",
+                            "filepath": "data/Automation_P02_SensorConcepts.pdf",
+                            "page": 19,
+                            "location_description": "Slide: Hysteresis error",
+                            "keywords": "hysteresis, memory, state, output time-depends on history, loading, unloading"
+                        },
+                        {
+                            "filename": "Automation_P02_SensorConcepts.pdf",
+                            "filepath": "data/Automation_P02_SensorConcepts.pdf",
+                            "page": 20,
+                            "location_description": "Slide: Quantifying Sensor Errors definitions",
+                            "keywords": "Quantifying Sensor Errors, accuracy, precision, uncertainty, reproducibility"
+                        },
+                        {
+                            "filename": "Automation_P02_SensorConcepts.pdf",
+                            "filepath": "data/Automation_P02_SensorConcepts.pdf",
+                            "page": 21,
+                            "location_description": "Slide: Accuracy & Precision further explanation",
+                            "keywords": "Accuracy & Precision, statistics, bias, variability, ISO, trueness"
                         }
                     ],
                     "subtopics": [
                         {
-                            "subtopic_name": "Types of Sensor Errors (Linear Model)",
-                            "subtopic_description": "Common errors when assuming a linear transfer function, such as offset, gain, and non-linearity.",
+                            "subtopic_name": "Typical Errors (Offset, Gain, Non-linearity)",
+                            "subtopic_description": "Common types of errors characterized in relation to a linear transfer function.",
                             "source_locations": [
                                 {
                                     "filename": "Automation_P02_SensorConcepts.pdf",
                                     "filepath": "data/Automation_P02_SensorConcepts.pdf",
                                     "page": 17,
-                                    "location_detail": "Diagrams",
-                                    "keywords": "typical errors, offset, gain, non-linearity"
-                                },
-                                {
-                                    "filename": "Automation_P02_SensorConcepts.pdf",
-                                    "filepath": "data/Automation_P02_SensorConcepts.pdf",
-                                    "page": 18,
-                                    "location_detail": "Note on calibration and errors",
-                                    "keywords": "Note on Calibration & Errors, correct offset and gain, mitigate non-linearity"
+                                    "location_detail": "Slide: Typical errors visualized",
+                                    "keywords": "offset error, gain error, non-linearity error, ideal response, actual response"
                                 }
                             ]
                         },
                         {
                             "subtopic_name": "Hysteresis",
-                            "subtopic_description": "Error where sensor output depends on the history of the input signal.",
+                            "subtopic_description": "Error where the sensor output depends on the history of the input signal.",
                             "source_locations": [
                                 {
                                     "filename": "Automation_P02_SensorConcepts.pdf",
                                     "filepath": "data/Automation_P02_SensorConcepts.pdf",
                                     "page": 19,
-                                    "location_detail": "Definition and example",
-                                    "keywords": "hysteresis, output time-depends on history, rubber band example"
+                                    "location_detail": "Slide: Hysteresis definition and example",
+                                    "keywords": "hysteresis, history, previous value, rubber band example"
                                 }
                             ]
                         },
                         {
-                            "subtopic_name": "Accuracy and Precision",
-                            "subtopic_description": "Defining and distinguishing between accuracy and precision in sensor measurements.",
+                            "subtopic_name": "Quantifying Errors (Accuracy and Precision)",
+                            "subtopic_description": "Defining and distinguishing accuracy and precision in sensor measurements.",
                             "source_locations": [
                                 {
                                     "filename": "Automation_P02_SensorConcepts.pdf",
                                     "filepath": "data/Automation_P02_SensorConcepts.pdf",
                                     "page": 20,
-                                    "location_detail": "Definitions and archer example",
-                                    "keywords": "Quantifying Sensor Errors, accuracy, precision, archer shooting"
+                                    "location_detail": "Slide: Accuracy and precision definitions",
+                                    "keywords": "accuracy, precision, uncertainty, reproducibility, archer shooting example"
                                 },
                                 {
                                     "filename": "Automation_P02_SensorConcepts.pdf",
                                     "filepath": "data/Automation_P02_SensorConcepts.pdf",
                                     "page": 21,
-                                    "location_detail": "Statistics view and ISO definition",
-                                    "keywords": "Accuracy & Precision, statistics, bias, variability, trueness, ISO"
+                                    "location_detail": "Slide: Accuracy and precision statistics",
+                                    "keywords": "bias, variability, trueness, ISO, reference value, probability density"
                                 }
                             ]
                         }
                     ]
                 },
                 {
-                    "topic_name": "Sensor Output Classification Metrics",
-                    "topic_description": "Evaluating the performance of sensors used for classification tasks.",
+                    "topic_name": "Binary Cases and Classification Performance",
+                    "topic_description": "Analyzing sensor performance in tasks involving binary or multi-class outcomes.",
                     "source_locations": [
                         {
                             "filename": "Automation_P02_SensorConcepts.pdf",
                             "filepath": "data/Automation_P02_SensorConcepts.pdf",
                             "page": 22,
-                            "location_description": "Topic Title Slide: Binary Cases"
+                            "location_description": "Slide: Binary Cases introduction",
+                            "keywords": "binary cases, switch, object, event, positive, negative, true, false, TP, FP, TN, FN"
+                        },
+                        {
+                            "filename": "Automation_P02_SensorConcepts.pdf",
+                            "filepath": "data/Automation_P02_SensorConcepts.pdf",
+                            "page": 26,
+                            "location_description": "Slide: Multiple Classes",
+                            "keywords": "multiple classes, confusion matrix"
                         }
                     ],
                     "subtopics": [
                         {
-                            "subtopic_name": "Binary Classification and Confusion Matrix",
-                            "subtopic_description": "Introduction to binary classification problems and the confusion matrix for organizing results.",
+                            "subtopic_name": "Confusion Matrix",
+                            "subtopic_description": "A table used to evaluate the performance of a classification algorithm.",
                             "source_locations": [
                                 {
                                     "filename": "Automation_P02_SensorConcepts.pdf",
                                     "filepath": "data/Automation_P02_SensorConcepts.pdf",
-                                    "page": 22,
-                                    "location_detail": "Binary cases introduction",
-                                    "keywords": "Binary Cases, positive, negative, true, false"
+                                    "page": 23,
+                                    "location_detail": "Slide: Binary Cases Confusion Matrix",
+                                    "keywords": "confusion matrix, ground truth, test outcome, TP, TN, FP, FN, weight checker example"
                                 },
                                 {
                                     "filename": "Automation_P02_SensorConcepts.pdf",
                                     "filepath": "data/Automation_P02_SensorConcepts.pdf",
-                                    "page": 23,
-                                    "location_detail": "Confusion Matrix table and example",
-                                    "keywords": "Confusion Matrix, TP, FP, TN, FN, product inspection example"
+                                    "page": 26,
+                                    "location_detail": "Slide: Multiple Classes Confusion Matrix",
+                                    "keywords": "confusion matrix, multiple classes, ground truth, test outcome"
                                 }
                             ]
                         },
                         {
-                            "subtopic_name": "Binary Classification Metrics",
-                            "subtopic_description": "Definitions and formulas for common metrics derived from the confusion matrix.",
+                            "subtopic_name": "Performance Metrics",
+                            "subtopic_description": "Metrics derived from the confusion matrix to quantify classification performance.",
                             "source_locations": [
                                 {
                                     "filename": "Automation_P02_SensorConcepts.pdf",
                                     "filepath": "data/Automation_P02_SensorConcepts.pdf",
                                     "page": 24,
-                                    "location_detail": "Metrics definitions (TPR, TNR, FNR, FPR)",
-                                    "keywords": "metrics, recall, sensitivity, hit rate, selectivity, specificity, miss rate, fall-out"
+                                    "location_detail": "Slide: Binary Cases Metrics",
+                                    "keywords": "metrics, recall, sensitivity, hit rate, TPR, selectivity, specificity, TNR, miss rate, FNR, fall-out, FPR, formulas"
                                 },
                                 {
                                     "filename": "Automation_P02_SensorConcepts.pdf",
                                     "filepath": "data/Automation_P02_SensorConcepts.pdf",
                                     "page": 25,
-                                    "location_detail": "Metrics definitions (ACC, PPV)",
-                                    "keywords": "metrics, accuracy, precision, positive predictive value"
+                                    "location_detail": "Slide: Binary Cases Accuracy and Precision",
+                                    "keywords": "accuracy, ACC, precision, positive predictive value, PPV, formulas"
                                 }
                             ]
                         },
                         {
-                            "subtopic_name": "Multi-Class Confusion Matrix",
-                            "subtopic_description": "Extending the confusion matrix concept to classification problems with more than two classes.",
+                            "subtopic_name": "Multiple Classes",
+                            "subtopic_description": "Extension of classification analysis to more than two classes.",
                             "source_locations": [
                                 {
                                     "filename": "Automation_P02_SensorConcepts.pdf",
                                     "filepath": "data/Automation_P02_SensorConcepts.pdf",
                                     "page": 26,
-                                    "location_detail": "Multi-class Confusion Matrix table",
-                                    "keywords": "Multiple Classes, Confusion Matrix"
+                                    "location_detail": "Slide: Multiple Classes",
+                                    "keywords": "multiple classes, per class, in total"
                                 }
                             ]
                         }
                     ]
                 },
                 {
-                    "topic_name": "Sensor Interfaces and Digital Systems",
-                    "topic_description": "Connecting sensors to digital systems, including ADCs and signal conditioning circuits.",
+                    "topic_name": "Sensors and Digital Interfacing",
+                    "topic_description": "Connecting sensors to digital systems, including relevant circuits and signal processing concepts.",
                     "source_locations": [
                         {
                             "filename": "Automation_P02_SensorConcepts.pdf",
                             "filepath": "data/Automation_P02_SensorConcepts.pdf",
                             "page": 27,
-                            "location_description": "Topic Title Slide"
+                            "location_description": "Slide: Title Sensors & Digital Systems",
+                            "keywords": null
                         }
                     ],
                     "subtopics": [
                         {
-                            "subtopic_name": "Analog-to-Digital Conversion (ADC)",
-                            "subtopic_description": "Converting analog sensor signals to digital values.",
+                            "subtopic_name": "Analog-to-Digital Converter (ADC)",
+                            "subtopic_description": "Converting analog sensor signals into digital values.",
                             "source_locations": [
                                 {
                                     "filename": "Automation_P02_SensorConcepts.pdf",
                                     "filepath": "data/Automation_P02_SensorConcepts.pdf",
                                     "page": 28,
-                                    "location_detail": "ADC definition and specs",
-                                    "keywords": "Analog Digital Converter, ADC, converts analog to digital, resolution"
+                                    "location_detail": "Slide: Analog Digital Converter definition and specs",
+                                    "keywords": "Analog to Digital Converter, ADC, A/D, A2D, converts analog voltage, digital value, input ranges, resolution, bits, micro-controller, integrated circuit"
                                 },
                                 {
                                     "filename": "Automation_P02_SensorConcepts.pdf",
                                     "filepath": "data/Automation_P02_SensorConcepts.pdf",
                                     "page": 29,
-                                    "location_detail": "Arduino ADC example",
-                                    "keywords": "Arduino Uno R3, ADC channels, 10 bit, 5V input"
+                                    "location_detail": "Slide: Arduino Uno R3 ADC example",
+                                    "keywords": "Arduino Uno R3, Atmel ATmega328, ADC channels, bit, input voltage"
                                 },
                                 {
                                     "filename": "Automation_P02_SensorConcepts.pdf",
                                     "filepath": "data/Automation_P02_SensorConcepts.pdf",
                                     "page": 30,
-                                    "location_detail": "Texas Instruments ADC example",
-                                    "keywords": "Texas Instruments, 12-Bit ADC, 8 channels, 2.7V input, I2C"
+                                    "location_detail": "Slide: Texas Instruments ADC example",
+                                    "keywords": "Texas Instruments ADC ADS7828E/250, channels, bit, input voltage, data bus, I2C, pin configuration, pin descriptions"
                                 },
                                 {
                                     "filename": "Automation_P02_SensorConcepts.pdf",
                                     "filepath": "data/Automation_P02_SensorConcepts.pdf",
                                     "page": 31,
-                                    "location_detail": "Resolution calculation",
-                                    "keywords": "ADC resolution, smallest changes, precision"
+                                    "location_detail": "Slide: ADC Resolution formula",
+                                    "keywords": "resolution, #bits N, smallest changes in voltage, precision, formula Umax - Umin / 2^N"
                                 }
                             ]
                         },
                         {
-                            "subtopic_name": "Sensor Signal Conditioning Circuits",
-                            "subtopic_description": "Circuits used to modify sensor signals before processing, such as voltage dividers and Wheatstone bridges.",
+                            "subtopic_name": "Voltage Divider",
+                            "subtopic_description": "A basic circuit to produce a fraction of an input voltage, often used for sensor interfacing.",
                             "source_locations": [
                                 {
                                     "filename": "Automation_P02_SensorConcepts.pdf",
                                     "filepath": "data/Automation_P02_SensorConcepts.pdf",
                                     "page": 32,
-                                    "location_detail": "Voltage Divider section",
-                                    "keywords": "Voltage Divider, passive circuit, resistors, output voltage fraction"
-                                },
+                                    "location_detail": "Slide: Voltage Divider definition and formula",
+                                    "keywords": "voltage divider, passive circuit, two resistors, output voltage, input voltage, interfacing, formula Vout = R2 / (R1 + R2) * Vin"
+                                }
+                            ]
+                        },
+                        {
+                            "subtopic_name": "Wheatstone Bridge",
+                            "subtopic_description": "A circuit configuration used for precise measurements, especially with resistance-changing sensors.",
+                            "source_locations": [
                                 {
                                     "filename": "Automation_P02_SensorConcepts.pdf",
                                     "filepath": "data/Automation_P02_SensorConcepts.pdf",
                                     "page": 33,
-                                    "location_detail": "Wheatstone Bridge introduction",
-                                    "keywords": "Wheatstone Bridge, changing resistance, thermistors, precise measurements"
+                                    "location_detail": "Slide: Wheatstone Bridge motivation and principle",
+                                    "keywords": "wheatstone bridge, changing resistance, thermistors, precise measurements, potentiometer, no current flow"
                                 },
                                 {
                                     "filename": "Automation_P02_SensorConcepts.pdf",
                                     "filepath": "data/Automation_P02_SensorConcepts.pdf",
                                     "page": 34,
-                                    "location_detail": "Wheatstone Bridge principle (null balance)",
-                                    "keywords": "Wheatstone Bridge operation principle, null balance, R1R4 = R3R2"
+                                    "location_detail": "Slide: Wheatstone Bridge original principle formulas",
+                                    "keywords": "operation principle, re-draw circuit, two voltage dividers, formula U5 = U0 (...), R1R4 = R3R2"
                                 },
                                 {
                                     "filename": "Automation_P02_SensorConcepts.pdf",
                                     "filepath": "data/Automation_P02_SensorConcepts.pdf",
                                     "page": 35,
-                                    "location_detail": "Wheatstone Bridge principle (deflection method)",
-                                    "keywords": "Wheatstone Bridge operation principle, deflection method, resistance changes"
+                                    "location_detail": "Slide: Wheatstone Bridge principle with resistance changes formulas",
+                                    "keywords": "operation principle, resistance changes, R'1 = R1 + delta R, formula for U5 with resistance change"
                                 },
                                 {
                                     "filename": "Automation_P02_SensorConcepts.pdf",
                                     "filepath": "data/Automation_P02_SensorConcepts.pdf",
                                     "page": 36,
-                                    "location_detail": "Wheatstone Bridge voltage formula",
-                                    "keywords": "Wheatstone Bridge formula, voltage output"
+                                    "location_detail": "Slide: Wheatstone Bridge approximate proportionality",
+                                    "keywords": "approximate proportionality, v << 1+k, delta R << R1+R2, U5 approx proportional to delta R"
                                 },
                                 {
                                     "filename": "Automation_P02_SensorConcepts.pdf",
                                     "filepath": "data/Automation_P02_SensorConcepts.pdf",
                                     "page": 37,
-                                    "location_detail": "Wheatstone Bridge sensitivity",
-                                    "keywords": "Wheatstone Bridge sensitivity, proportional to delta R, symmetric bridge"
+                                    "location_detail": "Slide: Wheatstone Bridge maximum sensitivity",
+                                    "keywords": "maximum sensitivity, k=1, R1=R2=R3=R4, symmetric Wheatstone bridge"
                                 }
                             ]
                         },
@@ -433,35 +469,28 @@
                                     "filename": "Automation_P02_SensorConcepts.pdf",
                                     "filepath": "data/Automation_P02_SensorConcepts.pdf",
                                     "page": 38,
-                                    "location_detail": "Definition and diagram",
-                                    "keywords": "Time Discretization, analog signal, sampling, sampling rate, sample and hold"
+                                    "location_detail": "Slide: Time Discretization definition and sampling",
+                                    "keywords": "Time Discretization, analog signal, continuous amplitude, continuous time, sampling, measuring, discrete time steps, fixed frequency, sampling rate, sample and hold"
                                 }
                             ]
                         },
                         {
-                            "subtopic_name": "Nyquist-Shannon Sampling Theorem and Aliasing",
-                            "subtopic_description": "Theorem defining the minimum sampling rate needed to accurately represent a signal and the phenomenon of aliasing.",
+                            "subtopic_name": "Nyquist-Shannon Sampling Theorem",
+                            "subtopic_description": "Theorem defining the minimum sampling rate required to accurately capture a signal.",
                             "source_locations": [
                                 {
                                     "filename": "Automation_P02_SensorConcepts.pdf",
                                     "filepath": "data/Automation_P02_SensorConcepts.pdf",
                                     "page": 39,
-                                    "location_detail": "Theorem statement",
-                                    "keywords": "Nyquist-Shannon Sampling Theorem, rate of discrete samples, bandwidth, Nyquist rate"
+                                    "location_detail": "Slide: Nyquist-Shannon Sampling Theorem statement",
+                                    "keywords": "Nyquist-Shannon Sampling Theorem, sufficient condition, rate of discrete samples, continuous-time signal, finite bandwidth, B Hertz, 1/(2B) sec apart, Nyquist rate, f(t)"
                                 },
                                 {
                                     "filename": "Automation_P02_SensorConcepts.pdf",
                                     "filepath": "data/Automation_P02_SensorConcepts.pdf",
                                     "page": 40,
-                                    "location_detail": "Nyquist frequency and aliasing",
-                                    "keywords": "Nyquist frequency, aliasing, two different signals, Moire effect"
-                                },
-                                {
-                                    "filename": "Automation_P02_SensorConcepts.pdf",
-                                    "filepath": "data/Automation_P02_SensorConcepts.pdf",
-                                    "page": 41,
-                                    "location_detail": "Aliasing image example",
-                                    "keywords": "aliasing, Moire effect, images"
+                                    "location_detail": "Slide: Nyquist-Shannon Sampling Theorem consequences",
+                                    "keywords": "sampling rate fs, Nyquist frequency fs/2, aliasing, Moire effect, wave-patterns"
                                 }
                             ]
                         }
@@ -471,222 +500,5 @@
         }
     ],
     "mistakes": [],
-    "good_answers": [
-        {
-            "source_filename": "Automation_P02_SensorConcepts.pdf",
-            "source_filepath": "data/Automation_P02_SensorConcepts.pdf",
-            "page": 3,
-            "location_detail": "Definition and characteristics",
-            "description": "Clear definition of a sensor and listing of physical properties measured and types of output signals with illustrative images.",
-            "relevant_topic": "Sensor Basics",
-            "relevant_subtopic": "Sensor Definition and Characteristics"
-        },
-        {
-            "source_filename": "Automation_P02_SensorConcepts.pdf",
-            "source_filepath": "data/Automation_P02_SensorConcepts.pdf",
-            "page": 4,
-            "location_detail": "Transducer concept with piezo example",
-            "description": "Explanation of a sensor as a transducer converting energy forms, with a clear example of piezo-electric crystals.",
-            "relevant_topic": "Sensor Basics",
-            "relevant_subtopic": "Sensor as Transducer"
-        },
-        {
-            "source_filename": "Automation_P02_SensorConcepts.pdf",
-            "source_filepath": "data/Automation_P02_SensorConcepts.pdf",
-            "page": 5,
-            "location_detail": "Active vs passive sensor distinction and examples",
-            "description": "Well-defined distinction between active and passive sensors with practical examples like thermistors and radar.",
-            "relevant_topic": "Sensor Basics",
-            "relevant_subtopic": "Active vs Passive Sensors"
-        },
-        {
-            "source_filename": "Automation_P02_SensorConcepts.pdf",
-            "source_filepath": "data/Automation_P02_SensorConcepts.pdf",
-            "page": 7,
-            "location_detail": "Linear transfer function graph",
-            "description": "Visual representation and explanation of a sensor's transfer function and its linear approximation.",
-            "relevant_topic": "Sensor Transfer Function",
-            "relevant_subtopic": "Definition and Linear Approximation"
-        },
-        {
-            "source_filename": "Automation_P02_SensorConcepts.pdf",
-            "source_filepath": "data/Automation_P02_SensorConcepts.pdf",
-            "page": 8,
-            "location_detail": "Sharp IR distance sensor graph",
-            "description": "Example of a non-linear sensor transfer function using a Sharp IR distance sensor with a corresponding output graph.",
-            "relevant_topic": "Sensor Transfer Function",
-            "relevant_subtopic": "Non-linear Characteristics"
-        },
-        {
-            "source_filename": "Automation_P02_SensorConcepts.pdf",
-            "filepath": "data/Automation_P02_SensorConcepts.pdf",
-            "page": 9,
-            "location_detail": "Ultrasonic range sensor principle",
-            "description": "Clear explanation of the ultrasonic range sensor principle based on time of flight.",
-            "relevant_topic": "Sensor Transfer Function",
-            "relevant_subtopic": "Ultrasonic Range Sensor Example"
-        },
-        {
-            "source_filename": "Automation_P02_SensorConcepts.pdf",
-            "filepath": "data/Automation_P02_SensorConcepts.pdf",
-            "page": 11,
-            "location_detail": "Speed of sound vs temperature/humidity graph",
-            "description": "Graph illustrating how environmental factors (temperature, humidity) affect the speed of sound, relevant for ultrasonic sensors.",
-            "relevant_topic": "Sensor Transfer Function",
-            "relevant_subtopic": "Ultrasonic Range Sensor Example"
-        },
-        {
-            "source_filename": "Automation_P02_SensorConcepts.pdf",
-            "filepath": "data/Automation_P02_SensorConcepts.pdf",
-            "page": 14,
-            "location_detail": "Linear Least Squares explanation and graph",
-            "description": "Explanation and visual depiction of Linear Least Squares method for sensor calibration.",
-            "relevant_topic": "Sensor Calibration",
-            "relevant_subtopic": "Linear Least Squares"
-        },
-        {
-            "source_filename": "Automation_P02_SensorConcepts.pdf",
-            "filepath": "data/Automation_P02_SensorConcepts.pdf",
-            "page": 15,
-            "location_detail": "Camera calibration example",
-            "description": "Example of a more complex calibration process using camera calibration and the pinhole model.",
-            "relevant_topic": "Sensor Calibration",
-            "relevant_subtopic": "Complex Calibration Examples"
-        },
-        {
-            "source_filename": "Automation_P02_SensorConcepts.pdf",
-            "filepath": "data/Automation_P02_SensorConcepts.pdf",
-            "page": 17,
-            "location_detail": "Sensor error diagrams",
-            "description": "Visual explanation of typical sensor errors like offset, gain, and non-linearity using output graphs.",
-            "relevant_topic": "Sensor Errors",
-            "relevant_subtopic": "Types of Sensor Errors (Linear Model)"
-        },
-        {
-            "source_filename": "Automation_P02_SensorConcepts.pdf",
-            "filepath": "data/Automation_P02_SensorConcepts.pdf",
-            "page": 19,
-            "location_detail": "Hysteresis diagram and rubber band example",
-            "description": "Explanation of hysteresis with a graph showing the load/unload curves and the intuitive rubber band analogy.",
-            "relevant_topic": "Sensor Errors",
-            "relevant_subtopic": "Hysteresis"
-        },
-        {
-            "source_filename": "Automation_P02_SensorConcepts.pdf",
-            "filepath": "data/Automation_P02_SensorConcepts.pdf",
-            "page": 20,
-            "location_detail": "Archer shooting target analogy",
-            "description": "Effective analogy using target shooting to explain the concepts of accuracy and precision.",
-            "relevant_topic": "Sensor Errors",
-            "relevant_subtopic": "Accuracy and Precision"
-        },
-        {
-            "source_filename": "Automation_P02_SensorConcepts.pdf",
-            "filepath": "data/Automation_P02_SensorConcepts.pdf",
-            "page": 23,
-            "location_detail": "Binary Confusion Matrix with example",
-            "description": "Introduction to the binary confusion matrix and its application to a product inspection example.",
-            "relevant_topic": "Sensor Output Classification Metrics",
-            "relevant_subtopic": "Binary Classification and Confusion Matrix"
-        },
-        {
-            "source_filename": "Automation_P02_SensorConcepts.pdf",
-            "filepath": "data/Automation_P02_SensorConcepts.pdf",
-            "page": 24,
-            "location_detail": "Definitions of binary metrics (TPR, TNR, FNR, FPR)",
-            "description": "Clear definitions and formulas for key binary classification metrics like Recall, Selectivity, Miss Rate, and Fall-out.",
-            "relevant_topic": "Sensor Output Classification Metrics",
-            "relevant_subtopic": "Binary Classification Metrics"
-        },
-        {
-            "source_filename": "Automation_P02_SensorConcepts.pdf",
-            "filepath": "data/Automation_P02_SensorConcepts.pdf",
-            "page": 25,
-            "location_detail": "Definitions of binary metrics (ACC, PPV)",
-            "description": "Clear definitions and formulas for Accuracy and Positive Predictive Value.",
-            "relevant_topic": "Sensor Output Classification Metrics",
-            "relevant_subtopic": "Binary Classification Metrics"
-        },
-        {
-            "source_filename": "Automation_P02_SensorConcepts.pdf",
-            "filepath": "data/Automation_P02_SensorConcepts.pdf",
-            "page": 26,
-            "location_detail": "Multi-class Confusion Matrix example",
-            "description": "Extension of the confusion matrix concept to handle multiple classification classes with a graphical example.",
-            "relevant_topic": "Sensor Output Classification Metrics",
-            "relevant_subtopic": "Multi-Class Confusion Matrix"
-        },
-        {
-            "source_filename": "Automation_P02_SensorConcepts.pdf",
-            "filepath": "data/Automation_P02_SensorConcepts.pdf",
-            "page": 28,
-            "location_detail": "ADC definition and specs",
-            "description": "Fundamental definition of an Analog-to-Digital Converter (ADC), its function, typical ranges, and resolution.",
-            "relevant_topic": "Sensor Interfaces and Digital Systems",
-            "relevant_subtopic": "Analog-to-Digital Conversion (ADC)"
-        },
-        {
-            "source_filename": "Automation_P02_SensorConcepts.pdf",
-            "filepath": "data/Automation_P02_SensorConcepts.pdf",
-            "page": 29,
-            "location_detail": "Arduino ADC example",
-            "description": "Example of ADCs integrated into a common microcontroller platform like the Arduino Uno R3.",
-            "relevant_topic": "Sensor Interfaces and Digital Systems",
-            "relevant_subtopic": "Analog-to-Digital Conversion (ADC)"
-        },
-        {
-            "source_filename": "Automation_P02_SensorConcepts.pdf",
-            "filepath": "data/Automation_P02_SensorConcepts.pdf",
-            "page": 32,
-            "location_detail": "Voltage Divider circuit and formula",
-            "description": "Explanation and diagram of a voltage divider circuit used for signal conditioning.",
-            "relevant_topic": "Sensor Interfaces and Digital Systems",
-            "relevant_subtopic": "Sensor Signal Conditioning Circuits"
-        },
-        {
-            "source_filename": "Automation_P02_SensorConcepts.pdf",
-            "filepath": "data/Automation_P02_SensorConcepts.pdf",
-            "page": 33,
-            "location_detail": "Wheatstone Bridge motivation and diagram",
-            "description": "Introduction to the Wheatstone Bridge and its application for precise measurement of resistance changes.",
-            "relevant_topic": "Sensor Interfaces and Digital Systems",
-            "relevant_subtopic": "Sensor Signal Conditioning Circuits"
-        },
-        {
-            "source_filename": "Automation_P02_SensorConcepts.pdf",
-            "filepath": "data/Automation_P02_SensorConcepts.pdf",
-            "page": 34,
-            "location_detail": "Wheatstone Bridge null balance principle",
-            "description": "Explanation of the null balance operating principle for the Wheatstone Bridge.",
-            "relevant_topic": "Sensor Interfaces and Digital Systems",
-            "relevant_subtopic": "Sensor Signal Conditioning Circuits"
-        },
-        {
-            "source_filename": "Automation_P02_SensorConcepts.pdf",
-            "filepath": "data/Automation_P02_SensorConcepts.pdf",
-            "page": 38,
-            "location_detail": "Time discretization and sampling diagram",
-            "description": "Explanation of time discretization and sampling for converting analog signals to discrete digital representations.",
-            "relevant_topic": "Sensor Interfaces and Digital Systems",
-            "relevant_subtopic": "Time Discretization and Sampling"
-        },
-        {
-            "source_filename": "Automation_P02_SensorConcepts.pdf",
-            "filepath": "data/Automation_P02_SensorConcepts.pdf",
-            "page": 39,
-            "location_detail": "Nyquist-Shannon Sampling Theorem statement",
-            "description": "Statement of the Nyquist-Shannon Sampling Theorem and its importance for capturing continuous-time signals.",
-            "relevant_topic": "Sensor Interfaces and Digital Systems",
-            "relevant_subtopic": "Nyquist-Shannon Sampling Theorem and Aliasing"
-        },
-        {
-            "source_filename": "Automation_P02_SensorConcepts.pdf",
-            "filepath": "data/Automation_P02_SensorConcepts.pdf",
-            "page": 40,
-            "location_detail": "Aliasing explanation and Moire effect",
-            "description": "Explanation of aliasing and the Moire effect as consequences of insufficient sampling rate.",
-            "relevant_topic": "Sensor Interfaces and Digital Systems",
-            "relevant_subtopic": "Nyquist-Shannon Sampling Theorem and Aliasing"
-        }
-    ]
+    "good_answers": []
 }
