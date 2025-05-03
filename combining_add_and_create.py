@@ -27,8 +27,8 @@ def process_and_add_file():
     For each good answer, record: location (page_number, location_detail - use null if unknown), description, relevant_topic name, and relevant_subtopic name (if applicable).
     Use the source filename and filepath provided externally (which will be added later) for the source_filename and source_filepath fields within each good answer object.
     Handle missing topic/subtopic links as described for mistakes. The sources should only contain the filename and the filepath the filepath,  only one entry. The descriptions you should add youself, based on the content. 
-    Same with keywords for localizaiton try and find them, and specify. Make sure the topics are broader, and that the page numbers are given, if there is page number on the document dont use it, use only the actual page counter
-    General Rules:Do not invent data. Use null for optional fields where information cannot be extracted.
+    Same with keywords for localizaiton try and find them, and specify. If there is page number on the document dont use it, use only the actual page counter. Make as many topics as possible, you can ignore subtopics and replace them with null
+    General Rules:Do not invent data. Use null for optional fields where information cannot be extracted. Make sure the topics extracted are correct,
     Adhere strictly to the JSON structure expected by the data insertion logic in the associated Python script. Only output the raw JSON object, nothing else before or after it.
     """
     entries=os.listdir('data')
@@ -40,7 +40,9 @@ def process_and_add_file():
                 GEMINI_PROMPT=GEMINI_PROMPT+f'\n Since this document is a text file instead of page number give row number but keep the same name in the json'
             file='data/'+filename
             file_name_to_gemini=f'\n The name of the information file is'+filename+f'\n And the filepath is '+file
+            topics=get_topic_id_pairs_as_string()
             GEMINI_PROMPT=GEMINI_PROMPT+file_name_to_gemini
+            GEMINI_PROMPT=GEMINI_PROMPT+f'\n This is the current topic list, make it so that every new topic if its name would be similar or mean the same thing to have use the topic name and id already there, the format is topic name: topic id, here is the topic list:\n'+topics
             process_pdf_to_db(file,database,GEMINI_PROMPT)
         else:
             print(f'File {filename} is already in the database')
