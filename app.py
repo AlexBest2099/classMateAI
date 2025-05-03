@@ -27,3 +27,23 @@ fig2 = px.bar(
     labels={'topic_name': 'Topic', 'error_rate': 'Error Rate'}
 )
 st.plotly_chart(fig2, use_container_width=True)
+
+# 3. Good vs Bad by Topic
+by_topic['bad'] = by_topic['total'] - by_topic['correct']
+melted = by_topic.melt(
+    id_vars=['topic_name'],
+    value_vars=['correct','bad'],
+    var_name='Outcome',
+    value_name='Count'
+)
+# Rename for clarity
+melted['Outcome'] = melted['Outcome'].map({'correct': 'Good Answers', 'bad': 'Mistakes'})
+fig3 = px.bar(
+    melted,
+    x='topic_name',
+    y='Count',
+    color='Outcome',
+    barmode='group',
+    title="Correct vs Mistakes by Topic"
+)
+st.plotly_chart(fig3, use_container_width=True)

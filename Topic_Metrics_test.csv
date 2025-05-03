@@ -1,0 +1,4 @@
+topic_name,total,correct,error_rate
+Algebra,36,21,0.41666666666666663
+Calculus,55,34,0.38181818181818183
+Mechanics,59,43,0.27118644067796616
