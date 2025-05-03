@@ -1,0 +1,79 @@
+{
+  "content": [
+    {
+      "subject_name": "Calculus",
+      "topics": [
+        {
+          "topic_name": "Differentiation",
+          "subtopics": [
+            {
+              "subtopic_name": "Chain Rule"
+            },
+            {
+              "subtopic_name": "Product Rule"
+            }
+          ]
+        },
+        {
+          "topic_name": "Integration"
+        }
+      ]
+    },
+    {
+      "subject_name": "Linear Algebra"
+    }
+  ],
+  "mistakes": [
+    {
+      "source_filename": "hw1.pdf",
+      "source_filepath": "/homework/calc/",
+      "page": 1,
+      "location_detail": "Q2a",
+      "description": "Forgot chain rule on outer function.",
+      "problem_formulation": "Differentiate $f(x) = \\sin(x^2+1)$",
+      "type": "Procedural",
+      "details": "Calculated derivative of $\\sin(u)$ but not $u'$",
+      "relevant_topic": "Differentiation",
+      "relevant_subtopic": "Chain Rule"
+    },
+    {
+      "source_filename": "hw1.pdf",
+      "source_filepath": "/homework/calc/",
+      "page": 1,
+      "location_detail": "Q2b",
+      "description": "Incorrect application of product rule.",
+      "problem_formulation": "Differentiate $g(x) = x^2 e^x$",
+      "type": "Calculation",
+      "relevant_topic": "Differentiation",
+      "relevant_subtopic": "Product Rule"
+    }
+  ],
+  "good_answers": [
+    {
+      "source_filename": "hw1.pdf",
+      "source_filepath": "/homework/calc/",
+      "page": 2,
+      "location_detail": "Q3",
+      "description": "Perfect application of chain rule and product rule together, clearly laid out.",
+      "problem_formulation": "Differentiate $h(x) = e^{x^2} \\cos(3x)$",
+      "relevant_topic": "Differentiation",
+      "relevant_subtopic": "Chain Rule"
+    },
+    {
+      "source_filename": "exam1.pdf",
+      "source_filepath": "/exams/calc/",
+      "page": 1,
+      "location_detail": "Q1",
+      "description": "Clear steps shown for basic derivative using power rule.",
+      "problem_formulation": "Find the derivative of $y = 5x^4 - 2x + 7$",
+      "relevant_topic": "Differentiation"
+    },
+    {
+      "source_filename": "notes_linalg.txt",
+      "source_filepath": "/notes/",
+      "location_detail": "Example 3",
+      "description": "Well-explained example of Gaussian elimination.",
+      "relevant_topic": "Linear Algebra"
+    }
+  ]
+}

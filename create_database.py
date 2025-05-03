@@ -4,7 +4,6 @@ import os
 import datetime # For default date
 
 # --- Database Schema Definitions (Constants) ---
-# Added Good_Answers table
 
 SQL_CREATE_SUBJECTS = """
 CREATE TABLE IF NOT EXISTS Subjects (
@@ -72,6 +71,7 @@ CREATE TABLE IF NOT EXISTS Subtopic_Source_Locations (
 );
 """
 
+# MODIFIED: Added problem_formulation to Mistakes table
 SQL_CREATE_MISTAKES = """
 CREATE TABLE IF NOT EXISTS Mistakes (
     mistake_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -79,6 +79,7 @@ CREATE TABLE IF NOT EXISTS Mistakes (
     topic_id INTEGER NOT NULL,        -- FK to Topics (relevant topic)
     subtopic_id INTEGER,              -- FK to Subtopics (relevant subtopic, nullable)
     mistake_description TEXT NOT NULL,-- Description of the error
+    problem_formulation TEXT,         -- NEW: The actual text of the problem/exercise (nullable)
     mistake_type TEXT,                -- Category of error (e.g., 'Calculation', 'Conceptual', 'Syntax')
     page_number INTEGER,              -- Page where mistake occurred
     location_detail TEXT,             -- Specific location (row, question number, etc.)
@@ -90,7 +91,7 @@ CREATE TABLE IF NOT EXISTS Mistakes (
 );
 """
 
-# NEW Table for tracking good answers/examples
+# MODIFIED: Added problem_formulation to Good_Answers table
 SQL_CREATE_GOOD_ANSWERS = """
 CREATE TABLE IF NOT EXISTS Good_Answers (
     good_answer_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -98,6 +99,7 @@ CREATE TABLE IF NOT EXISTS Good_Answers (
     topic_id INTEGER NOT NULL,        -- FK to Topics (relevant topic)
     subtopic_id INTEGER,              -- FK to Subtopics (relevant subtopic, nullable)
     answer_description TEXT NOT NULL, -- Description of why it's a good answer/example
+    problem_formulation TEXT,         -- NEW: The actual text of the problem/exercise (nullable)
     page_number INTEGER,              -- Page where answer is found
     location_detail TEXT,             -- Specific location (row, question number, etc.)
     date_recorded DATE DEFAULT CURRENT_DATE, -- When the example was logged
@@ -111,7 +113,7 @@ CREATE TABLE IF NOT EXISTS Good_Answers (
 def initialize_database_schema(db_file_path: str) -> bool:
     """
     Connects to the SQLite database and creates all necessary tables
-    including Mistakes and Good_Answers.
+    including Mistakes and Good_Answers with the problem_formulation field.
     """
     conn = None
     try:
@@ -126,11 +128,11 @@ def initialize_database_schema(db_file_path: str) -> bool:
         cursor.execute(SQL_CREATE_SOURCES)
         cursor.execute(SQL_CREATE_TOPIC_SOURCE_LOCATIONS)
         cursor.execute(SQL_CREATE_SUBTOPIC_SOURCE_LOCATIONS)
-        cursor.execute(SQL_CREATE_MISTAKES)
-        cursor.execute(SQL_CREATE_GOOD_ANSWERS) # Added Good_Answers table creation
+        cursor.execute(SQL_CREATE_MISTAKES) # Uses updated constant
+        cursor.execute(SQL_CREATE_GOOD_ANSWERS) # Uses updated constant
 
         conn.commit()
-        print(f"Database schema (with Good Answers tracking) initialized successfully in '{db_file_path}'.")
+        print(f"Database schema (with Problem Formulation) initialized successfully in '{db_file_path}'.")
         return True
 
     except sqlite3.Error as e:
@@ -148,16 +150,27 @@ def create_database_from_json(json_file_path: str, db_file_path: str) -> bool:
     """
     Initializes the database schema (if needed) and populates it by parsing
     a JSON file containing 'content', 'mistakes', and 'good_answers' sections.
+    Mistakes and Good Answers can now include a 'problem_formulation' field.
 
     Assumes JSON structure:
     {
       "content": [ ... ],
-      "mistakes": [ ... ],
+      "mistakes": [
+          {
+              "source_filename": "...", "source_filepath": "...",
+              "page": ..., "location_detail": "...",
+              "description": "...", "type": "...", "details": "...",
+              "problem_formulation": "The actual text of the exercise...", # Optional
+              "relevant_topic": "Topic Name",
+              "relevant_subtopic": "Subtopic Name" # Optional
+          }
+       ],
       "good_answers": [
           {
               "source_filename": "...", "source_filepath": "...",
               "page": ..., "location_detail": "...",
               "description": "...",
+              "problem_formulation": "The actual text of the exercise...", # Optional
               "relevant_topic": "Topic Name",
               "relevant_subtopic": "Subtopic Name" # Optional
           }
@@ -183,12 +196,11 @@ def create_database_from_json(json_file_path: str, db_file_path: str) -> bool:
     try:
         with open(json_file_path, 'r', encoding='utf-8') as f:
             data = json.load(f)
-            # Validate top-level structure more broadly
             if not isinstance(data, dict):
                  raise ValueError("JSON must be an object.")
             content_data = data.get("content", [])
             mistakes_data = data.get("mistakes", [])
-            good_answers_data = data.get("good_answers", []) # Get good answers data
+            good_answers_data = data.get("good_answers", [])
 
     except FileNotFoundError:
         print(f"Error: JSON file not found at {json_file_path}")
@@ -234,21 +246,27 @@ def create_database_from_json(json_file_path: str, db_file_path: str) -> bool:
         cursor.execute("SELECT subtopic_id FROM Subtopics WHERE topic_id = ? AND subtopic_name = ?", (topic_id, subtopic_name))
         result = cursor.fetchone(); return result[0] if result else None
 
-    # Mistake creation helper (unchanged)
-    def _create_mistake(cursor, source_id, topic_id, subtopic_id, desc, type, page, location, details):
-        if not source_id or not topic_id: print(f"Warning: Skipping mistake creation due to missing source_id or topic_id. Desc: {desc}"); return
-        cursor.execute("INSERT INTO Mistakes (source_id, topic_id, subtopic_id, mistake_description, mistake_type, page_number, location_detail, mistake_details) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (source_id, topic_id, subtopic_id, desc, type, page, location, details))
+    # MODIFIED: Mistake creation helper accepts problem_formulation
+    def _create_mistake(cursor, source_id, topic_id, subtopic_id, desc, problem_formulation, type, page, location, details):
+        if not source_id or not topic_id:
+            print(f"Warning: Skipping mistake creation due to missing source_id or topic_id. Desc: {desc}")
+            return
+        cursor.execute("""
+            INSERT INTO Mistakes
+            (source_id, topic_id, subtopic_id, mistake_description, problem_formulation, mistake_type, page_number, location_detail, mistake_details)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """, (source_id, topic_id, subtopic_id, desc, problem_formulation, type, page, location, details))
 
-    # NEW helper function for creating good answers
-    def _create_good_answer(cursor, source_id, topic_id, subtopic_id, desc, page, location):
+    # MODIFIED: Good answer creation helper accepts problem_formulation
+    def _create_good_answer(cursor, source_id, topic_id, subtopic_id, desc, problem_formulation, page, location):
         if not source_id or not topic_id:
             print(f"Warning: Skipping good answer creation due to missing source_id or topic_id. Desc: {desc}")
             return
         cursor.execute("""
             INSERT INTO Good_Answers
-            (source_id, topic_id, subtopic_id, answer_description, page_number, location_detail)
-            VALUES (?, ?, ?, ?, ?, ?)
-        """, (source_id, topic_id, subtopic_id, desc, page, location))
+            (source_id, topic_id, subtopic_id, answer_description, problem_formulation, page_number, location_detail)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        """, (source_id, topic_id, subtopic_id, desc, problem_formulation, page, location))
         # print(f"    Created good answer record (ID: {cursor.lastrowid})") # Optional logging
 
 
@@ -288,23 +306,46 @@ def create_database_from_json(json_file_path: str, db_file_path: str) -> bool:
 
         # --- Process Mistakes Section ---
         print("Processing 'mistakes' section...")
-        # ... (existing logic for mistakes - unchanged) ...
         for mistake_data in mistakes_data:
             source_filename = mistake_data.get("source_filename"); source_filepath = mistake_data.get("source_filepath")
             desc = mistake_data.get("description"); topic_name = mistake_data.get("relevant_topic")
-            if not source_filename or not source_filepath or not desc or not topic_name: print(f"Warning: Skipping mistake due to missing required fields. Desc: {desc}"); continue
+            if not source_filename or not source_filepath or not desc or not topic_name:
+                print(f"Warning: Skipping mistake due to missing required fields. Desc: {desc}")
+                continue
+
             source_id = _get_or_create_source(cursor, source_filename, source_filepath)
             topic_id = _get_topic_id_by_name(cursor, topic_name)
-            if not topic_id: print(f"Warning: Could not find topic '{topic_name}' for mistake. Skipping. Desc: {desc}"); continue
+            if not topic_id:
+                print(f"Warning: Could not find topic '{topic_name}' for mistake. Skipping. Desc: {desc}")
+                continue
+
             subtopic_id = None; subtopic_name = mistake_data.get("relevant_subtopic")
-            if subtopic_name: subtopic_id = _get_subtopic_id_by_name(cursor, topic_id, subtopic_name)
-            _create_mistake(cursor, source_id, topic_id, subtopic_id, desc, mistake_data.get("type"), mistake_data.get("page"), mistake_data.get("location_detail"), mistake_data.get("details"))
+            if subtopic_name:
+                subtopic_id = _get_subtopic_id_by_name(cursor, topic_id, subtopic_name)
+                # Optional: Warn if subtopic not found but still proceed with topic link
+                # if not subtopic_id: print(f"Warning: Subtopic '{subtopic_name}' not found under topic '{topic_name}' for mistake.")
+
+            # MODIFIED: Get problem formulation from JSON
+            problem_formulation = mistake_data.get("problem_formulation") # Gets None if not present
+
+            # MODIFIED: Pass problem formulation to helper function
+            _create_mistake(
+                cursor,
+                source_id,
+                topic_id,
+                subtopic_id,
+                desc,
+                problem_formulation, # Pass the text here
+                mistake_data.get("type"),
+                mistake_data.get("page"),
+                mistake_data.get("location_detail"),
+                mistake_data.get("details")
+            )
         print("'mistakes' section processing complete.")
 
-        # --- NEW: Process Good Answers Section ---
+        # --- Process Good Answers Section ---
         print("Processing 'good_answers' section...")
         for answer_data in good_answers_data:
-            # Get required fields
             source_filename = answer_data.get("source_filename")
             source_filepath = answer_data.get("source_filepath")
             desc = answer_data.get("description")
@@ -314,27 +355,30 @@ def create_database_from_json(json_file_path: str, db_file_path: str) -> bool:
                 print(f"Warning: Skipping good answer due to missing required fields (source_filename, source_filepath, description, relevant_topic). Desc: {desc}")
                 continue
 
-            # Find IDs for foreign keys
             source_id = _get_or_create_source(cursor, source_filename, source_filepath)
             topic_id = _get_topic_id_by_name(cursor, topic_name)
-            subtopic_id = None
-            subtopic_name = answer_data.get("relevant_subtopic")
-            if subtopic_name and topic_id: # Only look for subtopic if topic was found and subtopic name provided
-                subtopic_id = _get_subtopic_id_by_name(cursor, topic_id, subtopic_name)
-                if not subtopic_id:
-                     print(f"Warning: Could not find subtopic '{subtopic_name}' under topic '{topic_name}' for good answer. Linking to topic only.")
-
             if not topic_id:
                  print(f"Warning: Could not find topic '{topic_name}' for good answer. Skipping. Desc: {desc}")
                  continue
 
-            # Create the good answer record
+            subtopic_id = None
+            subtopic_name = answer_data.get("relevant_subtopic")
+            if subtopic_name: # Only look for subtopic if topic was found and subtopic name provided
+                subtopic_id = _get_subtopic_id_by_name(cursor, topic_id, subtopic_name)
+                if not subtopic_id:
+                     print(f"Warning: Could not find subtopic '{subtopic_name}' under topic '{topic_name}' for good answer. Linking to topic only.")
+
+            # MODIFIED: Get problem formulation from JSON
+            problem_formulation = answer_data.get("problem_formulation") # Gets None if not present
+
+            # MODIFIED: Pass problem formulation to helper function
             _create_good_answer(
                 cursor,
                 source_id,
                 topic_id,
                 subtopic_id, # Can be None
                 desc,
+                problem_formulation, # Pass the text here
                 answer_data.get("page"),
                 answer_data.get("location_detail")
             )
@@ -342,7 +386,7 @@ def create_database_from_json(json_file_path: str, db_file_path: str) -> bool:
 
 
         conn.commit()
-        print(f"Successfully populated database '{db_file_path}' from '{json_file_path}' (with Good Answers).")
+        print(f"Successfully populated database '{db_file_path}' from '{json_file_path}' (with Problem Formulation).")
         return True
 
     except sqlite3.Error as e:
@@ -356,11 +400,7 @@ def create_database_from_json(json_file_path: str, db_file_path: str) -> bool:
     finally:
         if conn: conn.close()
 
-
-
-
-
-
+# --- check_file_exists_in_db function remains unchanged ---
 def check_file_exists_in_db(db_filepath: str, filename_to_check: str) -> bool:
     """
     Checks if a record with the given filename exists in the Sources table
@@ -406,49 +446,95 @@ def check_file_exists_in_db(db_filepath: str, filename_to_check: str) -> bool:
     return exists
 
 
-
-
-
-
-
 # --- Example Usage ---
 if __name__ == "__main__":
-    JSON_FILE = 'test.json' # Use a new name for the JSON
-    DB_FILE = 'database.db'      # Use a distinct name for the DB
+    JSON_FILE = 'test_with_formulation.json' # Use a new name for the JSON
+    DB_FILE = 'database_with_formulation.db' # Use a distinct name for the DB
 
-    # Create dummy JSON with all sections if needed
+    # Create dummy JSON with problem formulations if needed
     if not os.path.exists(JSON_FILE):
-        print(f"Creating dummy JSON file with good answers at {JSON_FILE}...")
+        print(f"Creating dummy JSON file with problem formulations at {JSON_FILE}...")
         dummy_data = {
           "content": [
             {
               "subject_name": "Calculus",
-              "topics": [ { "topic_name": "Differentiation", "subtopics": [ { "subtopic_name": "Chain Rule" } ] } ]
-            }
+              "topics": [
+                  { "topic_name": "Differentiation",
+                    "subtopics": [
+                        { "subtopic_name": "Chain Rule" },
+                        { "subtopic_name": "Product Rule" }
+                    ]
+                  },
+                  { "topic_name": "Integration" }
+              ]
+            },
+            { "subject_name": "Linear Algebra"}
           ],
           "mistakes": [
             {
-              "source_filename": "hw1.pdf", "source_filepath": "/homework/calc/", "page": 1, "location_detail": "Q2",
-              "description": "Forgot chain rule", "type": "Procedural", "details": "Missed inner derivative.",
-              "relevant_topic": "Differentiation", "relevant_subtopic": "Chain Rule"
+              "source_filename": "hw1.pdf",
+              "source_filepath": "/homework/calc/",
+              "page": 1,
+              "location_detail": "Q2a",
+              "description": "Forgot chain rule on outer function.",
+              "problem_formulation": "Differentiate $f(x) = \sin(x^2+1)$", # Added formulation
+              "type": "Procedural",
+              "details": "Calculated derivative of $\sin(u)$ but not $u'$",
+              "relevant_topic": "Differentiation",
+              "relevant_subtopic": "Chain Rule"
+            },
+            {
+              "source_filename": "hw1.pdf",
+              "source_filepath": "/homework/calc/",
+              "page": 1,
+              "location_detail": "Q2b",
+              "description": "Incorrect application of product rule.",
+              "problem_formulation": "Differentiate $g(x) = x^2 e^x$", # Added formulation
+              "type": "Calculation",
+              "relevant_topic": "Differentiation",
+              "relevant_subtopic": "Product Rule"
             }
           ],
           "good_answers": [
             {
-              "source_filename": "hw1.pdf", "source_filepath": "/homework/calc/", "page": 2, "location_detail": "Q3",
-              "description": "Perfect application of chain rule and product rule together.",
-              "relevant_topic": "Differentiation", "relevant_subtopic": "Chain Rule"
+              "source_filename": "hw1.pdf",
+              "source_filepath": "/homework/calc/",
+              "page": 2,
+              "location_detail": "Q3",
+              "description": "Perfect application of chain rule and product rule together, clearly laid out.",
+              "problem_formulation": "Differentiate $h(x) = e^{x^2} \cos(3x)$", # Added formulation
+              "relevant_topic": "Differentiation",
+              "relevant_subtopic": "Chain Rule" # Could also link to product rule if needed, but keeping simple
             },
              {
-              "source_filename": "exam1.pdf", "source_filepath": "/exams/calc/", "page": 1, "location_detail": "Q1",
-              "description": "Clear steps shown for basic derivative.",
+              "source_filename": "exam1.pdf",
+              "source_filepath": "/exams/calc/",
+              "page": 1,
+              "location_detail": "Q1",
+              "description": "Clear steps shown for basic derivative using power rule.",
+              "problem_formulation": "Find the derivative of $y = 5x^4 - 2x + 7$", # Added formulation
               "relevant_topic": "Differentiation" # No specific subtopic needed here
+            },
+            {
+              "source_filename": "notes_linalg.txt",
+              "source_filepath": "/notes/",
+              "location_detail": "Example 3",
+              "description": "Well-explained example of Gaussian elimination.",
+              # "problem_formulation": "Solve the system: ...", # Could be added if applicable
+              "relevant_topic": "Linear Algebra" # Example doesn't *have* to have a problem formulation
             }
           ]
         }
         try:
-            with open(JSON_FILE, 'w', encoding='utf-8') as f: json.dump(dummy_data, f, indent=2)
-        except Exception as e: print(f"Error creating dummy JSON file: {e}")
+            with open(JSON_FILE, 'w', encoding='utf-8') as f:
+                json.dump(dummy_data, f, indent=2, ensure_ascii=False) # ensure_ascii=False for math symbols
+        except Exception as e:
+            print(f"Error creating dummy JSON file: {e}")
+
+    # Remove old DB file if it exists for a clean test
+    if os.path.exists(DB_FILE):
+        print(f"Removing existing database file: {DB_FILE}")
+        os.remove(DB_FILE)
 
     # Call the main function
     print(f"\nAttempting to create and populate DB '{DB_FILE}' from '{JSON_FILE}'...")
@@ -456,6 +542,20 @@ if __name__ == "__main__":
 
     if success:
         print("\nDatabase creation/population process completed successfully.")
+
+        # Optional: Verify data insertion (simple check)
+        try:
+            conn = sqlite3.connect(DB_FILE)
+            cursor = conn.cursor()
+            cursor.execute("SELECT COUNT(*) FROM Mistakes WHERE problem_formulation IS NOT NULL")
+            mistake_count = cursor.fetchone()[0]
+            cursor.execute("SELECT COUNT(*) FROM Good_Answers WHERE problem_formulation IS NOT NULL")
+            good_answer_count = cursor.fetchone()[0]
+            print(f"\nVerification: Found {mistake_count} mistakes with problem formulation.")
+            print(f"Verification: Found {good_answer_count} good answers with problem formulation.")
+            conn.close()
+        except Exception as e:
+            print(f"Verification failed: {e}")
+
     else:
         print("\nDatabase creation/population process failed.")
-
