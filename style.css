@@ -1,0 +1,53 @@
+body {
+    background-color: #f9fafb;
+}
+
+.font-inter {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Drop zone */
+.drop-zone {
+    border: 2px dashed #cbd5e1;
+    border-radius: 1rem; /* rounder */
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.drop-zone:hover,
+.drop-zone.drag-over {
+    border-color: #3b82f6;
+    background-color: #eff6ff;
+}
+
+.file-input {
+    display: none;
+}
+
+/* Button */
+.submit-btn {
+    width: 100%;
+    background-color: #2563eb;
+    color: white;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 0.75rem; /* rounder */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.2s ease;
+}
+
+.submit-btn:hover {
+    background-color: #1d4ed8;
+}
+
+/* Status animation */
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
