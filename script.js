@@ -48,19 +48,22 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault();
         const selectedType = docTypeSelect.value;
         const selectedFile = fileInput.files[0];
-
+        const apiKey = document.getElementById('apiKey').value;
+    
         if (!selectedType) return setStatus('error', 'Error: Please select a document type.');
         if (!selectedFile) return setStatus('error', 'Error: Please select a file to upload.');
-
+        if (!apiKey) return setStatus('error', 'Error: Please enter your Gemini API key.');
+    
         setStatus('uploading', 'Uploading your document...');
-
+    
         const formData = new FormData();
         formData.append('file', selectedFile);
         formData.append('docType', selectedType);
-
+        formData.append('apiKey', apiKey); // 👈 Send API key
+    
         try {
             const response = await fetch('/api/upload', { method: 'POST', body: formData });
-
+    
             if (response.ok) {
                 const data = await response.json();
                 setStatus('success', 'Success: File processed successfully!');
@@ -77,6 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
             setStatus('error', 'Error: Network error. Please try again.');
         }
     });
+    
 
     function setStatus(type, message) {
         statusMessage.className = `mt-6 p-4 rounded-md text-sm font-medium`;

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Performance Dashboard</title>
+
+  <!-- Plotly & Tailwind -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'class' };
+  </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans px-4 py-10">
+  <div class="max-w-4xl mx-auto">
+    <div class="flex items-center mb-6">
+      <h1 class="text-3xl font-bold">📊 Performance Dashboard</h1>
+      <div class="ml-auto flex gap-2">
+        <a href="index.html" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg shadow text-sm">Back to Home</a>
+        <button id="themeToggle" class="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100 px-3 py-1 rounded-lg shadow text-sm">Toggle Mode</button>
+      </div>
+    </div>
+    
+
+    <div class="mb-12">
+      <h2 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">Error Rate Over Time</h2>
+      <div id="errorByDate" style="height: 400px;"></div>
+    </div>
+
+    <div class="mb-12">
+      <h2 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">Error Rate by Topic</h2>
+      <div id="errorByTopic" style="height: 400px;"></div>
+    </div>
+  </div>
+
+  <!-- Theme Toggle Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const htmlTag = document.documentElement;
+      const themeToggle = document.getElementById('themeToggle');
+      const savedTheme = localStorage.getItem('theme');
+
+      if (savedTheme === 'dark') {
+        htmlTag.classList.add('dark');
+        htmlTag.classList.remove('light');
+      } else {
+        htmlTag.classList.add('light');
+        htmlTag.classList.remove('dark');
+      }
+
+      themeToggle.addEventListener('click', () => {
+        const isDark = htmlTag.classList.contains('dark');
+        htmlTag.classList.toggle('dark');
+        htmlTag.classList.toggle('light');
+        localStorage.setItem('theme', isDark ? 'light' : 'dark');
+        location.reload(); // Reload to re-render charts with correct theme
+      });
+    });
+  </script>
+
+  <!-- Chart Script -->
+  <script>
+    function getPlotlyLayout(title, xTitle, yTitle) {
+      const isDark = document.documentElement.classList.contains('dark');
+      return {
+        title,
+        paper_bgcolor: isDark ? "#1f2937" : "#fff",
+        plot_bgcolor: isDark ? "#1f2937" : "#fff",
+        font: { color: isDark ? "#fff" : "#000" },
+        xaxis: {
+          title: xTitle,
+          color: isDark ? "#fff" : "#000"
+        },
+        yaxis: {
+          title: yTitle,
+          range: [0, 1],
+          color: isDark ? "#fff" : "#000"
+        }
+      };
+    }
+
+    Plotly.d3.csv("Daily_Metrics_test.csv", function(err, rows) {
+      if (err) return alert("Failed to load daily_metrics.csv");
+
+      const dates = rows.map(r => r.date_recorded);
+      const rates = rows.map(r => parseFloat(r.error_rate));
+
+      Plotly.newPlot("errorByDate", [{
+        x: dates,
+        y: rates,
+        type: 'scatter',
+        mode: 'lines+markers',
+        marker: { color: '#3b82f6' }
+      }], getPlotlyLayout('Daily Error Rate', 'Date', 'Error Rate'));
+    });
+
+    Plotly.d3.csv("Topic_Metrics_test.csv", function(err, rows) {
+      if (err) return alert("Failed to load topic_metrics.csv");
+
+      const topics = rows.map(r => r.topic_name);
+      const topicRates = rows.map(r => parseFloat(r.error_rate));
+
+      Plotly.newPlot("errorByTopic", [{
+        x: topics,
+        y: topicRates,
+        type: 'bar',
+        marker: { color: '#f97316' }
+      }], getPlotlyLayout('Error Rate by Topic', 'Topic', 'Error Rate'));
+    });
+  </script>
+</body>
+</html>
