@@ -9,7 +9,7 @@ from add_to_database import process_pdf_to_db
 
 def process_and_add_file():
 
-    initialize_database_schema('database')
+    initialize_database_schema('database.db')
 
     database='database.db'
     GEMINI_PROMPT = """
@@ -27,7 +27,7 @@ def process_and_add_file():
     For each good answer, record: location (page_number, location_detail - use null if unknown), description, relevant_topic name, and relevant_subtopic name (if applicable).
     Use the source filename and filepath provided externally (which will be added later) for the source_filename and source_filepath fields within each good answer object.
     Handle missing topic/subtopic links as described for mistakes. The sources should only contain the filename and the filepath the filepath,  only one entry. The descriptions you should add youself, based on the content. 
-    Same with keywords for localizaiton try and find them, and specify
+    Same with keywords for localizaiton try and find them, and specify. Make sure the topics are broader, and that the page numbers are given
     General Rules:Do not invent data. Use null for optional fields where information cannot be extracted.
     Adhere strictly to the JSON structure expected by the data insertion logic in the associated Python script. Only output the raw JSON object, nothing else before or after it.
     """
