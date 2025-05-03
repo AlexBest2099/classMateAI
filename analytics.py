@@ -3,7 +3,7 @@ import pandas as pd
 import json
 import create_database
 
-DB_FILE = 'database.db'   # match whatever your importer wrote
+DB_FILE = 'test_database.db'   # match whatever your importer wrote
 conn = sqlite3.connect(DB_FILE)
 create_database.initialize_database_schema(DB_FILE)
 
