@@ -5,7 +5,7 @@ import json
 # --- Import the database creation function ---
 # Make sure create_database.py is in the same directory or your Python path
 from create_database import create_database_from_json
-
+import config
 
 # --- Main Processing Function ---
 def process_pdf_to_db(pdf_filepath, db_filepath,GEMINI_PROMPT):
@@ -22,7 +22,7 @@ def process_pdf_to_db(pdf_filepath, db_filepath,GEMINI_PROMPT):
         bool: True if processing and database update were successful, False otherwise.
     """
     # --- Configure API within the function ---
-    api_key='AIzaSyBCnOUfUWbVD0VdJBc62qwFH01McBQVN_o'
+    api_key=config.api_key
     if not api_key:
         print("ERROR: Google API Key is required but was not provided.")
         return False

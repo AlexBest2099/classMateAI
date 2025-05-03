@@ -446,116 +446,68 @@ def check_file_exists_in_db(db_filepath: str, filename_to_check: str) -> bool:
     return exists
 
 
-# --- Example Usage ---
-if __name__ == "__main__":
-    JSON_FILE = 'test_with_formulation.json' # Use a new name for the JSON
-    DB_FILE = 'database_with_formulation.db' # Use a distinct name for the DB
 
-    # Create dummy JSON with problem formulations if needed
-    if not os.path.exists(JSON_FILE):
-        print(f"Creating dummy JSON file with problem formulations at {JSON_FILE}...")
-        dummy_data = {
-          "content": [
-            {
-              "subject_name": "Calculus",
-              "topics": [
-                  { "topic_name": "Differentiation",
-                    "subtopics": [
-                        { "subtopic_name": "Chain Rule" },
-                        { "subtopic_name": "Product Rule" }
-                    ]
-                  },
-                  { "topic_name": "Integration" }
-              ]
-            },
-            { "subject_name": "Linear Algebra"}
-          ],
-          "mistakes": [
-            {
-              "source_filename": "hw1.pdf",
-              "source_filepath": "/homework/calc/",
-              "page": 1,
-              "location_detail": "Q2a",
-              "description": "Forgot chain rule on outer function.",
-              "problem_formulation": "Differentiate $f(x) = \sin(x^2+1)$", # Added formulation
-              "type": "Procedural",
-              "details": "Calculated derivative of $\sin(u)$ but not $u'$",
-              "relevant_topic": "Differentiation",
-              "relevant_subtopic": "Chain Rule"
-            },
-            {
-              "source_filename": "hw1.pdf",
-              "source_filepath": "/homework/calc/",
-              "page": 1,
-              "location_detail": "Q2b",
-              "description": "Incorrect application of product rule.",
-              "problem_formulation": "Differentiate $g(x) = x^2 e^x$", # Added formulation
-              "type": "Calculation",
-              "relevant_topic": "Differentiation",
-              "relevant_subtopic": "Product Rule"
-            }
-          ],
-          "good_answers": [
-            {
-              "source_filename": "hw1.pdf",
-              "source_filepath": "/homework/calc/",
-              "page": 2,
-              "location_detail": "Q3",
-              "description": "Perfect application of chain rule and product rule together, clearly laid out.",
-              "problem_formulation": "Differentiate $h(x) = e^{x^2} \cos(3x)$", # Added formulation
-              "relevant_topic": "Differentiation",
-              "relevant_subtopic": "Chain Rule" # Could also link to product rule if needed, but keeping simple
-            },
-             {
-              "source_filename": "exam1.pdf",
-              "source_filepath": "/exams/calc/",
-              "page": 1,
-              "location_detail": "Q1",
-              "description": "Clear steps shown for basic derivative using power rule.",
-              "problem_formulation": "Find the derivative of $y = 5x^4 - 2x + 7$", # Added formulation
-              "relevant_topic": "Differentiation" # No specific subtopic needed here
-            },
-            {
-              "source_filename": "notes_linalg.txt",
-              "source_filepath": "/notes/",
-              "location_detail": "Example 3",
-              "description": "Well-explained example of Gaussian elimination.",
-              # "problem_formulation": "Solve the system: ...", # Could be added if applicable
-              "relevant_topic": "Linear Algebra" # Example doesn't *have* to have a problem formulation
-            }
-          ]
-        }
-        try:
-            with open(JSON_FILE, 'w', encoding='utf-8') as f:
-                json.dump(dummy_data, f, indent=2, ensure_ascii=False) # ensure_ascii=False for math symbols
-        except Exception as e:
-            print(f"Error creating dummy JSON file: {e}")
+def get_topic_id_pairs_as_string(db_filepath: str = 'database.db') -> str:
+    """
+    Retrieves all topic IDs and names from the Topics table in the specified
+    SQLite database and returns them as a single string, with each pair
+    formatted as "Topic Name: Topic ID" on a new line.
 
-    # Remove old DB file if it exists for a clean test
-    if os.path.exists(DB_FILE):
-        print(f"Removing existing database file: {DB_FILE}")
-        os.remove(DB_FILE)
+    Args:
+        db_filepath: The path to the SQLite database file.
+                     Defaults to 'database.db'.
 
-    # Call the main function
-    print(f"\nAttempting to create and populate DB '{DB_FILE}' from '{JSON_FILE}'...")
-    success = create_database_from_json(JSON_FILE, DB_FILE)
+    Returns:
+        A string containing all topic name/ID pairs, sorted by topic name,
+        each on a new line (e.g., "Topic A: 1\nTopic B: 2").
+        Returns an error message string if the database/table cannot be accessed
+        or if no topics are found.
+    """
+    if not os.path.exists(db_filepath):
+        return f"Error: Database file not found at '{db_filepath}'"
 
-    if success:
-        print("\nDatabase creation/population process completed successfully.")
+    conn = None
+    try:
+        # Connect to the SQLite database
+        conn = sqlite3.connect(db_filepath)
+        cursor = conn.cursor()
 
-        # Optional: Verify data insertion (simple check)
-        try:
-            conn = sqlite3.connect(DB_FILE)
-            cursor = conn.cursor()
-            cursor.execute("SELECT COUNT(*) FROM Mistakes WHERE problem_formulation IS NOT NULL")
-            mistake_count = cursor.fetchone()[0]
-            cursor.execute("SELECT COUNT(*) FROM Good_Answers WHERE problem_formulation IS NOT NULL")
-            good_answer_count = cursor.fetchone()[0]
-            print(f"\nVerification: Found {mistake_count} mistakes with problem formulation.")
-            print(f"Verification: Found {good_answer_count} good answers with problem formulation.")
+        # Check if the Topics table exists
+        cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='Topics';")
+        if cursor.fetchone() is None:
+            return f"Error: 'Topics' table not found in database '{db_filepath}'. Was the database initialized?"
+
+        # Query to get topic ID and name, sorted by name
+        # Selects all entries, relying on schema uniqueness or listing duplicates if they exist
+        cursor.execute("SELECT topic_id, topic_name FROM Topics ORDER BY topic_name;")
+
+        # Fetch all results. fetchall() returns a list of tuples.
+        # Example: [(1, 'Calculus'), (3, 'Differentiation'), (2, 'Linear Algebra')]
+        results = cursor.fetchall()
+
+        if not results:
+            return f"No topics found in the 'Topics' table of database '{db_filepath}'."
+
+        # Format each pair (name: id) and store in a list
+        formatted_pairs = []
+        for topic_id, topic_name in results:
+            # Ensure topic_name is not None or empty before formatting
+            if topic_name:
+                formatted_pairs.append(f"{topic_name}: {topic_id}")
+            else:
+                # Optionally handle cases where topic_name might be NULL
+                formatted_pairs.append(f"Unknown Topic: {topic_id}")
+
+        # Join the list of formatted strings with newline characters
+        return '\n'.join(formatted_pairs)
+
+    except sqlite3.Error as e:
+        # Handle potential database errors
+        return f"Error: Database error occurred while querying topics - {e}"
+    except Exception as e:
+        # Catch any other unexpected errors
+        return f"Error: An unexpected error occurred - {e}"
+    finally:
+        # Ensure the database connection is closed
+        if conn:
             conn.close()
-        except Exception as e:
-            print(f"Verification failed: {e}")
-
-    else:
-        print("\nDatabase creation/population process failed.")
