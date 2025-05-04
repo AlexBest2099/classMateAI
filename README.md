@@ -9,7 +9,7 @@ This project provides a system for uploading, analyzing, and tracking performanc
 ## Features
 
 * **Document Processing:**
-    * Backend processing pipeline (`combining_add_and_create.py`, `add_to_database.py`) analyzes documents (PDF, TXT supported) from a specified `data/` directory using the Gemini API.
+    * Backend processing pipeline (`combining_add_and_create.py`, `add_to_database.py`) analyzes documents from a specified `data/` directory using the Gemini API.
     * Checks for duplicates in the database before processing.
     * Requires Gemini API Key configuration (`config.py`).
 * **Content Extraction & Database Storage:**
