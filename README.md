@@ -32,20 +32,44 @@ This project provides a system for uploading, analyzing, and tracking performanc
     * Generates comprehensive Markdown study guides for specific topics (`study_guide_generation.py`) using the Gemini API, triggered via the Tkinter GUI.
     * Synthesizes information from relevant database-linked documents and questions extracted from recorded mistakes.
     * Cites source documents within the generated guide.
-* **Web Interface Components (`index.html`, `script.js`, `style.css`):**
+* **Web Interface Components (`index.html`, `script.js`, `style.css`): (Not functional)**
     * HTML/JS/CSS files suggest the presence or plan for a web-based document upload interface, separate from the main Tkinter application. This likely requires a dedicated backend API endpoint (e.g., `/api/upload`) for full functionality.
 
-## Workflow (Focusing on Tkinter GUI)
+## Using the Application (Tkinter GUI Workflow)
 
-1.  **Data Preparation:** Place educational documents into the `Hackaton-master/Hackaton/data/` directory.
-2.  **Launch GUI:** Navigate to the `Hackaton-master/Hackaton/` directory and run `python main.py`.
-3.  **Process Files:** Click the "Process New Files" button in the GUI. This triggers `process_and_add_file` (`combining_add_and_create.py`), which analyzes new files in the `data/` directory using Gemini (`add_to_database.py`) and updates the database (`create_database.py`).
-4.  **View Analytics:** Click the "Show Analytics" button. This runs `analytics.py` to update metrics files and then launches the Streamlit dashboard (`app.py`) in a web browser.
-5.  **Generate Study Guide:**
-    * Click "Refresh List" to load topics with mistakes.
-    * Select a topic from the list.
-    * Click "Generate Study Guide for Selected".
-    * The application exports relevant questions (`find_mistakes_topics.py`) and then calls the study guide generation function (`study_guide_generation.py`), saving the result in the `study_guides/` directory.
+This workflow focuses on using the primary Tkinter GUI application located in the `Hackaton-master/Hackaton/` directory.
+
+1.  **Launch the Application:**
+    * Navigate to the `Hackaton-master/Hackaton/` directory in your terminal.
+    * Ensure your Gemini API key is correctly set in `config.py`.
+    * Run the application using Python:
+        ```bash
+        python main.py
+        ```
+
+2.  **(Optional) Explore Initial State:**
+    * The application comes with sample documents pre-loaded in the `Hackaton-master/Hackaton/data/` directory. These may have already been processed and populated into the `database.db` file.
+    * You can inspect the current state of the database (`database.db`) using a recommended SQLite viewer (like the "SQLite by alexcvzz" extension in VS Code or DB Browser for SQLite) to view the existing data in tables such as `Mistakes`, `Good_Answers`, `Topics`, etc.
+
+3.  **Process Your Documents (Optional):**
+    * To analyze your own documents, place them into the `Hackaton-master/Hackaton/data/` directory.
+    * In the running GUI application, click the "Process New Files" button.
+    * The system will identify unprocessed files in the `data/` directory, send them to the Gemini API for analysis, and update the `database.db` with extracted topics, mistakes, and good answers. Files already processed will be skipped.
+
+4.  **View Performance Analytics:**
+    * In the GUI, click the "Show Analytics" button.
+    * The application will first run the `analytics.py` script in the background to ensure the metric files (`*.csv`, `*.json`) are up-to-date based on the current database contents.
+    * Subsequently, it will launch the interactive Streamlit dashboard (`app.py`) in your default web browser, visualizing the calculated error rates and trends.
+
+5.  **Generate a Customized Study Guide:**
+    * In the GUI, click the "Refresh List" button. This queries the database and populates the listbox with topics that currently have associated mistakes recorded.
+    * Select a topic of interest from the "Topics with Mistakes" list.
+    * Click the "Generate Study Guide for Selected" button.
+    * The application performs the following steps:
+        * Exports the problem formulations of mistakes linked to the selected topic into a temporary file (`find_mistakes_topics.py`).
+        * Identifies relevant source documents associated with the topic in the database.
+        * Sends these documents and the mistake formulations to the Gemini API (`study_guide_generation.py`).
+        * Saves the generated, cited study guide in Markdown format within the `study_guides/` directory. An attempt will be made to open this directory automatically.
 
 ## File Structure/Components
 
