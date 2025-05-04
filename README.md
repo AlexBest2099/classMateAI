@@ -1,4 +1,4 @@
-# Hackaton
+# classMateAI
 
 # Educational Document Analysis and Study Aid
 
@@ -47,9 +47,10 @@ This workflow focuses on using the primary Tkinter GUI application located in th
         python main.py
         ```
 
-2.  **(Optional) Explore Initial State:**
-    * The application comes with sample documents pre-loaded in the `Hackaton-master/Hackaton/data/` directory. These may have already been processed and populated into the `database.db` file.
-    * You can inspect the current state of the database (`database.db`) using a recommended SQLite viewer (like the "SQLite by alexcvzz" extension in VS Code or DB Browser for SQLite) to view the existing data in tables such as `Mistakes`, `Good_Answers`, `Topics`, etc.
+2.  **Explore Pre-loaded Data (Recommended First Step):**
+    * The repository directory contains sample documents. **To save you time during initial use, these documents have already been processed, and their analysis results are pre-loaded into the `database.db` file.** This is because the AI analysis step (`Process New Files`) can take some time for each document to process.
+    * You can immediately explore the application's features (like analytics and study guide generation) using this pre-existing data.
+    * To view the pre-loaded data directly, inspect the `database.db` file using an SQLite viewer (e.g., the "SQLite by alexcvzz" VS Code extension or DB Browser for SQLite). You'll find populated tables like `Mistakes`, `Good_Answers`, `Topics`, etc.
 
 3.  **Process Your Documents (Optional):**
     * To analyze your own documents, place them into the your directory.
