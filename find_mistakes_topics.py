@@ -61,7 +61,7 @@ def export_questions_for_topic_to_txt(
 ) -> bool:
     """
     Retrieves question formulations for a specific topic and writes them,
-    numbered, to a text file.
+    numbered, to a text file. Adds a header line indicating the output filename.
 
     Args:
         topic_name: The name of the topic to filter by.
@@ -79,14 +79,15 @@ def export_questions_for_topic_to_txt(
     formulations_data = []
     try:
         with sqlite3.connect(db_filepath) as conn:
-            conn.row_factory = sqlite3.Row
+            conn.row_factory = sqlite3.Row # Use Row factory
             cursor = conn.cursor()
 
-            # Check tables
-            cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name IN ('Mistakes', 'Topics');")
+            # Check tables (Keep Sources check in case needed later, but not strictly required for this version)
+            cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name IN ('Mistakes', 'Topics', 'Sources');")
             tables_found = {row['name'] for row in cursor.fetchall()}
-            if 'Mistakes' not in tables_found or 'Topics' not in tables_found:
-                print("Error: Required tables ('Mistakes', 'Topics') not found.", file=sys.stderr)
+            if not {'Mistakes', 'Topics'}.issubset(tables_found): # Only strictly need Mistakes & Topics now
+                missing = {'Mistakes', 'Topics'} - tables_found
+                print(f"Error: Required tables ({', '.join(missing)}) not found.", file=sys.stderr)
                 return False
 
             # Find topic_id
@@ -94,7 +95,7 @@ def export_questions_for_topic_to_txt(
             topic_result = cursor.fetchone()
             if not topic_result:
                 print(f"Info: Topic '{topic_name}' not found.", file=sys.stderr)
-                return False # Indicate failure as topic doesn't exist
+                return False
             topic_id = topic_result['topic_id']
 
             # Check column exists
@@ -104,7 +105,7 @@ def export_questions_for_topic_to_txt(
                  print(f"Error: 'problem_formulation' column not found.", file=sys.stderr)
                  return False
 
-            # Get formulations
+            # --- ORIGINAL QUERY: Only need problem_formulation ---
             query = "SELECT M.problem_formulation FROM Mistakes M WHERE M.topic_id = ?;"
             cursor.execute(query, (topic_id,))
             formulations_data = cursor.fetchall() # List of Row objects
@@ -116,25 +117,35 @@ def export_questions_for_topic_to_txt(
         print(f"Error: Unexpected error during DB access: {e}", file=sys.stderr)
         return False
 
-    # Write the formulations to the specified text file
+    # --- MODIFIED FILE WRITING ---
     question_number = 0
     try:
-        # Ensure output directory exists (optional, creates if needed)
+        # Ensure output directory exists
         output_dir = os.path.dirname(output_filepath)
-        if output_dir: # Check if path includes a directory part
+        if output_dir:
              os.makedirs(output_dir, exist_ok=True)
 
         with open(output_filepath, 'w', encoding='utf-8') as f:
+            # --- ADDED HEADER LINE ---
+            base_filename = os.path.basename(output_filepath)
+            f.write(f"Filename: {base_filename}\n\n") # Write header + blank line
+            # -------------------------
+
             for row in formulations_data:
                 formulation = row['problem_formulation']
                 # Only write non-empty formulations
                 if formulation:
                     question_number += 1
-                    # Replace potential literal '\n' with actual newlines for readability
+                    # Replace potential literal '\n' with actual newlines
                     cleaned_formulation = str(formulation).replace('\\n', '\n')
-                    f.write(f"{question_number}: {cleaned_formulation}\n\n") # Add extra newline for spacing
+                    # Original writing format for the question itself
+                    f.write(f"{question_number}: {cleaned_formulation}\n\n") # Add extra newline
 
-        print(f"Successfully exported {question_number} question(s) for topic '{topic_name}' to '{output_filepath}'.")
+        if question_number > 0:
+            print(f"Successfully exported {question_number} question(s) for topic '{topic_name}' to '{output_filepath}'.")
+        else:
+            # File is still created with header even if no questions found
+            print(f"No questions with formulations found for topic '{topic_name}'. Output file '{output_filepath}' created with header only.")
         return True
 
     except IOError as e:

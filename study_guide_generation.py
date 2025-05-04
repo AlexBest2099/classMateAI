@@ -169,7 +169,7 @@ def create_study_guide_md(topic_name: str,
         4. Provide clear examples or illustrations of the concepts, drawing from the context files.
         5. Offer tips or strategies for mastering the topic.
         6. **Crucially, for any information, concept, example, mistake, or question analysis you mention, you MUST cite the source file(s) where it originates using the format [Filename] or [Filename, Page X] or [Filename, Location Y] if page number or location details are available in the context.** Base your citations ONLY on the provided filenames listed above (use the base filenames like 'lecture1.pdf', not the full paths).
-
+        7. Make sure the file focuses mainly on the questions from the question.txt, so do no overexplain like summarzing all the doccuments fully
         Structure the guide logically using **Markdown formatting** (headings, lists, bold text, etc.). Ensure the entire output is valid Markdown.
         """
         print("\nGenerating Markdown study guide...")

@@ -19,7 +19,7 @@ def process_and_add_file():
     Content Extraction ("content" key):Identify the hierarchy: Subject(s) -> Topic(s) -> Subtopic(s).
     For each Topic and Subtopic, extract source location details (page_number, location_description/location_detail, keywords as applicable). Use null for any unidentifiable location details.
     Populate the "content" list following the nested structure expected by the script.
-    Mistake Identification ("mistakes" key):Only extract mistakes if the source document type is homework, exam, graded work, or if mistakes are explicitly marked in the text. Otherwise, this should be an empty list ([]).
+    Mistake Identification ("mistakes" key):Only extract mistakes if the source document type is homework, exam, graded work, or if mistakes are explicitly marked in the text. Otherwise, this should be an empty list ([]). 
     For each mistake, record: location (page_number, location_detail - use null if unknown), description, type, details, relevant_topic name, and relevant_subtopic name (if applicable).
     Use the source filename and filepath provided externally (which will be added later) for the source_filename and source_filepath fields within each mistake object.
     If relevant_topic or relevant_subtopic cannot be confidently identified, use null or omit the entry based on the script's handling logic (assume linking to the topic is mandatory if a mistake is recorded). Do not invent links.
