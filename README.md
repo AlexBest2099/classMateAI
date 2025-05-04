@@ -37,10 +37,10 @@ This project provides a system for uploading, analyzing, and tracking performanc
 
 ## Using the Application (Tkinter GUI Workflow)
 
-This workflow focuses on using the primary Tkinter GUI application located in the `Hackaton-master/Hackaton/` directory.
+This workflow focuses on using the primary Tkinter GUI application located in the repository directory.
 
 1.  **Launch the Application:**
-    * Navigate to the `Hackaton-master/Hackaton/` directory in your terminal.
+    * Navigate to the repository directory in your terminal, from where you downloaded **this** file.
     * Ensure your Gemini API key is correctly set in `config.py`.
     * Run the application using Python:
         ```bash
@@ -52,7 +52,7 @@ This workflow focuses on using the primary Tkinter GUI application located in th
     * You can inspect the current state of the database (`database.db`) using a recommended SQLite viewer (like the "SQLite by alexcvzz" extension in VS Code or DB Browser for SQLite) to view the existing data in tables such as `Mistakes`, `Good_Answers`, `Topics`, etc.
 
 3.  **Process Your Documents (Optional):**
-    * To analyze your own documents, place them into the `Hackaton-master/Hackaton/data/` directory.
+    * To analyze your own documents, place them into the your directory.
     * In the running GUI application, click the "Process New Files" button.
     * The system will identify unprocessed files in the `data/` directory, send them to the Gemini API for analysis, and update the `database.db` with extracted topics, mistakes, and good answers. Files already processed will be skipped.
 
