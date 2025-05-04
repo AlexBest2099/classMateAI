@@ -9,7 +9,7 @@ import config
 def create_study_guide_md(topic_name: str,
                           question_txt_filepath: str,
                           db_filepath: str = 'database.db',
-                          output_dir: str = '.',
+                          output_dir: str = 'study_guides',
                           model_name: str = "gemini-2.5-flash-preview-04-17") -> str | None:
     """
     Generates a Markdown study guide for a topic using Gemini.
